@@ -1,9 +1,22 @@
 package com.dmantz.ecapp.request;
 
+import javax.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="sign_up")
+
 public class CreateSignUpRequestPO {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int user_id;
-	private String name;
+	
+	private String name;	
 	private String phone_number;
 	private String email_id;
 	private String password;
