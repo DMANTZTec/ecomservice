@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dmantz.ecapp.model.CatalogDirRow;
+//import com.dmantz.ecapp.model.CatalogDirRow;
 import com.dmantz.ecapp.request.CatalogRequestRo;
+import com.dmantz.ecapp.response.CatalogDirRowResponseObj;
 //import com.dmantz.ecapp.model.CatalogDirRow;
 import com.dmantz.ecapp.service.GetNavigationDataService;
 
@@ -24,7 +25,7 @@ public class CatalogNavigationController {
 	private GetNavigationDataService navigationService;
 
 	@RequestMapping(value = "/catalog_dir", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<CatalogDirRow> getCatalogDir(@RequestBody(required = true) @Valid CatalogRequestRo catalogRequestRo) {
+	public List<CatalogDirRowResponseObj> getCatalogDir(@RequestBody(required = true) @Valid CatalogRequestRo catalogRequestRo) {
 		return navigationService.getCatalogDir(catalogRequestRo);
 		// return navigationService.getCatalogDir(startLevel, endLevel,null,
 		// parentCatalogId);

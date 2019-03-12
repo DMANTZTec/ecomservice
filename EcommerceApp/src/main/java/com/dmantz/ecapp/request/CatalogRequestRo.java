@@ -2,7 +2,7 @@ package com.dmantz.ecapp.request;
 
 import java.util.List;
 
-import com.dmantz.ecapp.model.CatalogDirRow;
+//import com.dmantz.ecapp.model.CatalogDirRow;
 
 public class CatalogRequestRo {
 	private int startLevel;

@@ -13,8 +13,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.dmantz.ecapp.model.CatalogDirRow;
+//import com.dmantz.ecapp.model.CatalogDirRow;
 import com.dmantz.ecapp.request.CatalogRequestRo;
+import com.dmantz.ecapp.response.CatalogDirRowResponseObj;
 //import com.dmantz.ecapp.request.CatalogRequestRO;
 
 //import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,7 +23,7 @@ import com.dmantz.ecapp.request.CatalogRequestRo;
 //import com.mysql.cj.xdevapi.JsonArray;
 
 @Service
-public class GetNavigationDataService implements Navigationservice {
+public class GetNavigationDataService implements NavigationserviceImpl {
 
 	@Autowired
 	private JdbcTemplate jt;
@@ -30,7 +31,7 @@ public class GetNavigationDataService implements Navigationservice {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate ;
 	
 
-	public List<CatalogDirRow> getCatalogDir(CatalogRequestRo catalogRequestRo) {
+	public List<CatalogDirRowResponseObj> getCatalogDir(CatalogRequestRo catalogRequestRo) {
 
 		//String query = "SELECT catalog_id,parent_catalog_id,catalog_level,catalog_name,catalog_desc,store_id FROM catalog_dir Where store_id=1 and catalog_level between 0 and 3";
 		String query = "SELECT * FROM catalog_dir Where store_id=:storeId and  catalog_level between :startLevel and :endLevel";
@@ -42,20 +43,20 @@ public class GetNavigationDataService implements Navigationservice {
 		//paramMap.put("curCatalog", catalogRequestRo.getCurCatalog());
 		
 		
-		List<CatalogDirRow> results = namedParameterJdbcTemplate.query(query,paramMap, new BeanPropertyRowMapper<CatalogDirRow>(CatalogDirRow.class));
+		List<CatalogDirRowResponseObj> results = namedParameterJdbcTemplate.query(query,paramMap, new BeanPropertyRowMapper<CatalogDirRowResponseObj>(CatalogDirRowResponseObj.class));
 		System.out.println("values in " + results);
 		return getCatalogDirR(catalogRequestRo.getStartLevel(),catalogRequestRo.getEndLevel(), null, 0, results);
 		//return getCatalogDirR(null, 0, null, null, results, catalogRequestRo);
 		//return results;
 	}
 
-	public List<CatalogDirRow> getCatalogDirR(Integer startLevel, Integer endLevel, CatalogDirRow parentCatalogRow,
-			Integer parentCatalogId, List<CatalogDirRow> catalogdirRowsDb) {
+	public List<CatalogDirRowResponseObj> getCatalogDirR(Integer startLevel, Integer endLevel, CatalogDirRowResponseObj parentCatalogRow,
+			Integer parentCatalogId, List<CatalogDirRowResponseObj> catalogdirRowsDb) {
 		final int levelChecker = startLevel;
 		final int parentCatalogChecker = parentCatalogId;
 		int childStartLevel;
-		List<CatalogDirRow> retCatalog;
-		List<CatalogDirRow> filteredCatalogdir = catalogdirRowsDb.stream().filter(
+		List<CatalogDirRowResponseObj> retCatalog;
+		List<CatalogDirRowResponseObj> filteredCatalogdir = catalogdirRowsDb.stream().filter(
 				res -> res.getCatalogLevel() == levelChecker && res.getParentCatalogId()== parentCatalogChecker)
 				.collect(Collectors.toList());
 		System.out.println("stream:" + filteredCatalogdir);
@@ -63,11 +64,11 @@ public class GetNavigationDataService implements Navigationservice {
 		if (startLevel < endLevel) {
 
 			childStartLevel = startLevel+1;			
-			Iterator<CatalogDirRow> catIterator = filteredCatalogdir.iterator();
+			Iterator<CatalogDirRowResponseObj> catIterator = filteredCatalogdir.iterator();
 			// for each entry in filteredCatalogdir
 			// do nothing
 			while(catIterator.hasNext()) {				
-			CatalogDirRow curCatalogRow = catIterator.next();
+			CatalogDirRowResponseObj curCatalogRow = catIterator.next();
 				System.out.println("Recur Call: " + childStartLevel + ":" + endLevel + ":" + curCatalogRow.getCatalogId());
 				retCatalog = getCatalogDirR(childStartLevel,endLevel,curCatalogRow,curCatalogRow.getCatalogId(),catalogdirRowsDb);
 				curCatalogRow.setChildCatalog(retCatalog);				
