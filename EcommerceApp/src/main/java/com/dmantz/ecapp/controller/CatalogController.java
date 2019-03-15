@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dmantz.ecapp.common.Product;
 import com.dmantz.ecapp.request.CatalogRequest;
 import com.dmantz.ecapp.response.CatalogResponse;
 import com.dmantz.ecapp.service.CatalogService;
@@ -34,9 +35,12 @@ public class CatalogController {
 	}
    @RequestMapping(value="ec/product",method=RequestMethod.POST)
    public CatalogResponse product(@RequestBody CatalogRequest catalogReq) {
+	  
 	System.out.println(" you have entered into product(.) method in class CatalogController.");
     //CatalogService catalogServiceObj=new CatalogService();
-    catalogService.product();
-	return null;
+   ArrayList products=(ArrayList)catalogService.product(catalogReq);
+    CatalogResponse catalogResponse=new CatalogResponse();
+    catalogResponse.setProducts(products);
+	return catalogResponse;
    }
 }

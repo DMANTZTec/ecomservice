@@ -4,16 +4,17 @@ import java.util.ArrayList;
 
 public class Product {
 
-	String productId;
+	Integer productId;
 	String productManufacturerName;
 	String brandName;
 	ArrayList<ProductSku> productSkus;
 	
 	
-	public String getProductId() {
+	
+	public Integer getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
 	public String getProductManufacturerName() {

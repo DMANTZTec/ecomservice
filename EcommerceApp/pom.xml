@@ -74,8 +74,6 @@
 
 <!-- newly added dependency -->
 <!-- dependencies for communicating database. -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jms -->
-
 
 
 		<dependency>
