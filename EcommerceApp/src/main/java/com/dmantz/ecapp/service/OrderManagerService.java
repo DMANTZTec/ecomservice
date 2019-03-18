@@ -88,4 +88,20 @@ public class OrderManagerService {
         	 
 	}
 
+
+	public String deleteOrder(int order_id) {
+			
+		//orderRepository.delete(order);
+		orderRepository.deleteById(order_id);
+		///orderRepository.deleteById(order.);
+		
+				return "order deleted successfully";
+	}
+
+	public Order getOrder(int order_id) {
+		Optional<Order> retOrder=orderRepository.findById(order_id);
+		Order obj=retOrder.get();
+				return obj;
+	}
+
 }
