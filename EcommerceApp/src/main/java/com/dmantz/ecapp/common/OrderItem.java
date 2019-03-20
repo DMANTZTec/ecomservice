@@ -1,15 +1,10 @@
 package com.dmantz.ecapp.common;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.dmantz.ecapp.request.CreateOrderRequestPO;
 
 /**
  * @author Mounika
@@ -18,24 +13,21 @@ import com.dmantz.ecapp.request.CreateOrderRequestPO;
 @Entity
 @Table(name = "order_item")
 public class OrderItem {
-
+	
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderItemId;
 	
-	@ManyToOne(cascade= CascadeType.ALL)
+	/*@ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "orderId")
-    private  CreateOrderRequestPO order;
+    private  CreateOrderRequestPO order;*/
 	
-//	private int orderId;
-	
-	// @ManyToOne(cascade = CascadeType.ALL)
-	// @JoinColumn(name="orderId")
-	// private CreateOrderRequestPO createOrderRequestPO;
-	// private int orderItemId1;
-	
-	private int productId;
+	private int order_id;
+
+
+		private int productId;
 	private String productSku;
 	private String mrpPrice;
 	private String price;
@@ -43,21 +35,21 @@ public class OrderItem {
 	private String quantity;
 	private String giftWrapped;
 	private String productName;
+	
+	
+	public int getOrder_id() {
+		return order_id;
+	}
+	public void setOrder_id(int order_id) {
+		this.order_id = order_id;
+	}
 	public int getOrderItemId() {
 		return orderItemId;
 	}
 	public void setOrderItemId(int orderItemId) {
 		this.orderItemId = orderItemId;
 	}
-	/*
-	public int getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-	*/
-	public int getProductId() {
+		public int getProductId() {
 		return productId;
 	}
 	public void setProductId(int productId) {
@@ -104,6 +96,18 @@ public class OrderItem {
 	}
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+	@Override
+	public String toString() {
+		return "OrderItem [order_id=" + order_id + ", orderItemId=" + orderItemId + ", productId=" + productId
+				+ ", productSku=" + productSku + ", mrpPrice=" + mrpPrice + ", price=" + price + ", discountApplied="
+				+ discountApplied + ", quantity=" + quantity + ", giftWrapped=" + giftWrapped + ", productName="
+				+ productName + ", getOrder_id()=" + getOrder_id() + ", getOrderItemId()=" + getOrderItemId()
+				+ ", getProductId()=" + getProductId() + ", getProductSku()=" + getProductSku() + ", getMrpPrice()="
+				+ getMrpPrice() + ", getPrice()=" + getPrice() + ", getDiscountApplied()=" + getDiscountApplied()
+				+ ", getQuantity()=" + getQuantity() + ", getGiftWrapped()=" + getGiftWrapped() + ", getProductName()="
+				+ getProductName() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }
