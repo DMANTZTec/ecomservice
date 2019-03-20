@@ -17,8 +17,11 @@ import com.dmantz.ecapp.response.CatalogDirRowResponseObj;
 //import com.dmantz.ecapp.model.CatalogDirRow;
 import com.dmantz.ecapp.service.GetNavigationDataService;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @RestController
 @RequestMapping("/")
+@EnableSwagger2
 public class CatalogNavigationController {
 
 	@Autowired

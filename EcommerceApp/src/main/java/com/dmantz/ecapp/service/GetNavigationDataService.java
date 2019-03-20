@@ -58,7 +58,7 @@ public class GetNavigationDataService implements NavigationserviceImpl {
 		List<CatalogDirRowResponseObj> retCatalog;
 		List<CatalogDirRowResponseObj> filteredCatalogdir = catalogdirRowsDb.stream().filter(
 				res -> res.getCatalogLevel() == levelChecker && res.getParentCatalogId()== parentCatalogChecker)
-				.collect(Collectors.toList());
+				.collect(Collectors.toList());       
 		System.out.println("stream:" + filteredCatalogdir);
 	
 		if (startLevel < endLevel) {
@@ -67,7 +67,7 @@ public class GetNavigationDataService implements NavigationserviceImpl {
 			Iterator<CatalogDirRowResponseObj> catIterator = filteredCatalogdir.iterator();
 			// for each entry in filteredCatalogdir
 			// do nothing
-			while(catIterator.hasNext()) {				
+			while(catIterator.hasNext()) {				 
 			CatalogDirRowResponseObj curCatalogRow = catIterator.next();
 				System.out.println("Recur Call: " + childStartLevel + ":" + endLevel + ":" + curCatalogRow.getCatalogId());
 				retCatalog = getCatalogDirR(childStartLevel,endLevel,curCatalogRow,curCatalogRow.getCatalogId(),catalogdirRowsDb);
