@@ -20,7 +20,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString()
-public class Sku {
+public class ProductSkuRO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +34,7 @@ public class Sku {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "optionId", referencedColumnName = "productSkuId")
 
-	List<Options> options;
+	List<OptionsRO> options;
 
 	public int getProductSkuId() {
 		return productSkuId;
@@ -68,11 +68,11 @@ public class Sku {
 		this.productId = productId;
 	}
 
-	public List<Options> getOptions() {
+	public List<OptionsRO> getOptions() {
 		return options;
 	}
 
-	public void setOptions(List<Options> options) {
+	public void setOptions(List<OptionsRO> options) {
 		this.options = options;
 	}
 

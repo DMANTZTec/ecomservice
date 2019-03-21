@@ -20,7 +20,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString()
-public class Product {
+public class ProductRO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +34,7 @@ public class Product {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "productId", referencedColumnName = "productId")
-	List<Sku> SKU;
+	List<ProductSkuRO> SKU;
 
 	public int getProductId() {
 		return productId;
@@ -68,11 +68,11 @@ public class Product {
 		this.searchTag = searchTag;
 	}
 
-	public List<Sku> getSKU() {
+	public List<ProductSkuRO> getSKU() {
 		return SKU;
 	}
 
-	public void setSKU(List<Sku> sKU) {
+	public void setSKU(List<ProductSkuRO> sKU) {
 		SKU = sKU;
 	}
 

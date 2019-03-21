@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Data
-public class Options {
+public class OptionsRO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
