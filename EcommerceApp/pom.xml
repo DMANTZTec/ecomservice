@@ -76,15 +76,7 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<!-- newly added dependency -->
 		<!-- dependencies for communicating database. -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jms -->
-
-
-		<!-- newly added dependency -->
-		<!-- dependencies for communicating database. -->
-
-
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -94,13 +86,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-     <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-     <artifactId>lombok</artifactId>
-      <version>1.18.6</version>
-     <scope>provided</scope>
-    </dependency>
+     
+           <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+		    <groupId>log4j</groupId>
+		    <artifactId>log4j</artifactId>
+		    <version>1.2.17</version>
+		</dependency>
+		       
 
 	</dependencies>
 
