@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.dmantz.ecapp.common.User;
-import com.dmantz.ecapp.dao.UserRepository;
+import com.dmantz.ecapp.repository.UserRepository;
 import com.dmantz.ecapp.request.CreateSignUpRequestPO;
 
 @Service
@@ -115,20 +115,39 @@ public class UserManagerService {
 
 	}
 
-	public String deleteUser(CreateSignUpRequestPO createSignUpRequestPOObj) {
-		
-		User userObj = new User();
-
-		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
-		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
-		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
-		userObj.setLastName(createSignUpRequestPOObj.getLastName());
-		userObj.setPassword(createSignUpRequestPOObj.getPassword());
-
-		Optional<User> deleteObj = userRepositoryObj.findById(userObj.getUser_id());
-		User deleteUser = deleteObj.get();
-		userRepositoryObj.delete(deleteUser);
-		return "deleted";
-	}
-
+//	public String deleteUser(CreateSignUpRequestPO createSignUpRequestPOObj) {
+//		
+//		User userObj = new User();
+//
+//		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
+//		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
+//		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
+//		userObj.setLastName(createSignUpRequestPOObj.getLastName());
+//		userObj.setPassword(createSignUpRequestPOObj.getPassword());
+//
+//		Optional<User> deleteObj = userRepositoryObj.findById(userObj.getUser_id());
+//		User deleteUser = deleteObj.get();
+//		return userRepositoryObj.save(deleteUser);
+//	}
+	
+//	public User update(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
+//
+//		User userObj = new User();
+//
+//		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
+//		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
+//		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
+//		userObj.setLastName(createSignUpRequestPOObj.getLastName());
+//		userObj.setPassword(createSignUpRequestPOObj.getPassword()); 
+//
+//		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
+//		User userUpdate = updateObj.get();
+//		
+//		return "Updated"; 
+//	public void update(@PathVariable Integer user_id, CreateSignUpRequestPO createSignUpRequestPOObj) {
+//		
+//		userRepositoryObj.save(createSignUpRequestPOObj);
+//		
+//	
+//	}
 }

@@ -7,8 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 public class CreateSignUpRequestPO {
 
+	
 	private int user_id;
 	private String firstName;
 	private String lastName;
