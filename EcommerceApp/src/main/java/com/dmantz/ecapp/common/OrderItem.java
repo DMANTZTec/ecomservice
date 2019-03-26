@@ -27,7 +27,7 @@ public class OrderItem {
 	private int order_id;
 
 
-		private int productId;
+	private int productId;
 	private String productSku;
 	private String mrpPrice;
 	private String price;

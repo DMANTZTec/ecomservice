@@ -9,13 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import com.dmantz.ecapp.common.OrderItem;
 
 @Entity
 @Table(name="orders")
@@ -28,12 +24,15 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="order_id")
-		private int id;
+	private int id;
 	
-	@OneToMany(cascade= {CascadeType.PERSIST,CascadeType.REMOVE})
+	@OneToMany(cascade= CascadeType.ALL,orphanRemoval=true)
 	@JoinColumn(name="order_id",referencedColumnName="order_id")
-	
 	private List<OrderItem> orderItemObj;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	
+	private ShippingAddress shippingAddress;
 
 	public List<OrderItem> getOrderItemObj() {
 		return orderItemObj;
@@ -41,6 +40,16 @@ public class Order {
 
 	public void setOrderItemObj(List<OrderItem> orderItemObj) {
 		this.orderItemObj = orderItemObj;
+	}
+
+	
+	
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
 	}
 
 	public String getCustomerId() {
