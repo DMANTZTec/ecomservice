@@ -28,6 +28,13 @@ public class CreateOrderRequestPO {
 	public void setOrderItemObj(List<OrderItem> orderItemObj) {
 		this.orderItemObj = orderItemObj;
 	}
+	@Override
+	public String toString() {
+		return "CreateOrderRequestPO [customerId=" + customerId + ", id=" + id + ", orderItemObj=" + orderItemObj
+				+ ", getCustomerId()=" + getCustomerId() + ", getId()=" + getId() + ", getOrderItemObj()="
+				+ getOrderItemObj() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
 	
 	
 
