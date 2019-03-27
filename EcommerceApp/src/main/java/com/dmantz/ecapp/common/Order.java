@@ -26,7 +26,7 @@ public class Order {
 	@Column(name="order_id")
 	private int id;
 	
-	@OneToMany(cascade= CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(cascade= CascadeType.ALL)
 	@JoinColumn(name="order_id",referencedColumnName="order_id")
 	private List<OrderItem> orderItemObj;
 	

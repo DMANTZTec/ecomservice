@@ -12,7 +12,7 @@ public class ShippingAddress {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int shippingAddressId;
+	private int id;
 	
 	private String customerId;
 	private String firstName;
@@ -30,11 +30,12 @@ public class ShippingAddress {
 	
 	
 	
-	public int getShippingAddressId() {
-		return shippingAddressId;
+	
+	public int getId() {
+		return id;
 	}
-	public void setShippingAddressId(int shippingAddressId) {
-		this.shippingAddressId = shippingAddressId;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getCustomerId() {
 		return customerId;
@@ -115,20 +116,7 @@ public class ShippingAddress {
 		this.lastFlg = lastFlg;
 	}
 	
-	@Override
-	public String toString() {
-		return "ShippingAddress [shippingAddressId=" + shippingAddressId + ", customerId=" + customerId + ", firstName="
-				+ firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", mobileNo=" + mobileNo
-				+ ", flatNo=" + flatNo + ", area=" + area + ", landmark=" + landmark + ", city=" + city + ", state="
-				+ state + ", pincode=" + pincode + ", primaryFlg=" + primaryFlg + ", lastFlg=" + lastFlg
-				+ ", getShippingAddressId()=" + getShippingAddressId() + ", getCustomerId()=" + getCustomerId()
-				+ ", getFirstName()=" + getFirstName() + ", getMiddleName()=" + getMiddleName() + ", getLastName()="
-				+ getLastName() + ", getMobileNo()=" + getMobileNo() + ", getFlatNo()=" + getFlatNo() + ", getArea()="
-				+ getArea() + ", getLandmark()=" + getLandmark() + ", getCity()=" + getCity() + ", getState()="
-				+ getState() + ", getPincode()=" + getPincode() + ", getPrimaryFlg()=" + getPrimaryFlg()
-				+ ", getLastFlg()=" + getLastFlg() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
-	}
+	
 	
 		
 	

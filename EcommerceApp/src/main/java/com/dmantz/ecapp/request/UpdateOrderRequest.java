@@ -1,5 +1,6 @@
 package com.dmantz.ecapp.request;
 
+import com.dmantz.ecapp.common.AddItem;
 import com.dmantz.ecapp.common.BillingAddress;
 import com.dmantz.ecapp.common.PaymentMethod;
 import com.dmantz.ecapp.common.ShippingAddress;
@@ -11,9 +12,10 @@ public class UpdateOrderRequest {
 	private String customerId;
 	private int shippingAddressId;
 	private UpdateQuantity updateQuantity;
+	private AddItem addItem;
 	private int billingAddressId;
     private  String couponCode ;
-    private PaymentMethod paymentMethod;
+   
     
 	public int getOrderId() {
 		return orderId;
@@ -51,40 +53,12 @@ public class UpdateOrderRequest {
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
 	}
-	public PaymentMethod getPaymentMethod() {
-		return paymentMethod;
+	public AddItem getAddItem() {
+		return addItem;
 	}
-	public void setPaymentMethod(PaymentMethod paymentMethod) {
-		this.paymentMethod = paymentMethod;
+	public void setAddItem(AddItem addItem) {
+		this.addItem = addItem;
 	}
-	@Override
-	public String toString() {
-		return "UpdateOrderRequest [orderId=" + orderId + ", customerId=" + customerId + ", shippingAddressId="
-				+ shippingAddressId + ", updateQuantity=" + updateQuantity + ", billingAddressId=" + billingAddressId
-				+ ", couponCode=" + couponCode + ", paymentMethod=" + paymentMethod + ", getOrderId()=" + getOrderId()
-				+ ", getCustomerId()=" + getCustomerId() + ", getShippingAddressId()=" + getShippingAddressId()
-				+ ", getUpdateQuantity()=" + getUpdateQuantity() + ", getBillingAddressId()=" + getBillingAddressId()
-				+ ", getCouponCode()=" + getCouponCode() + ", getPaymentMethod()=" + getPaymentMethod()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
-	}
-    
+		
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-    
 }

@@ -17,6 +17,7 @@ import com.dmantz.ecapp.common.ShippingAddress;
 import com.dmantz.ecapp.request.CreateOrderRequestPO;
 import com.dmantz.ecapp.request.UpdateOrderRequest;
 import com.dmantz.ecapp.response.OrderResponse;
+import com.dmantz.ecapp.response.UpdateOrderResponse;
 import com.dmantz.ecapp.service.OrderManagerService;
 
 @RestController
@@ -64,7 +65,7 @@ public class OrderController {
 	
 	//Request mapping for updateOrderByQuantity
 	@PutMapping(value="/updateOrder")
-	public String updateOrder(@RequestBody UpdateOrderRequest updateOrderRequest)
+	public UpdateOrderResponse updateOrder(@RequestBody UpdateOrderRequest updateOrderRequest)
 	{
 		 return orderManagerService.updateOrder( updateOrderRequest);
 				
