@@ -7,8 +7,17 @@ public class Product {
 	Integer productId;
 	String productManufacturerName;
 	String brandName;
+	String productName;
 	ArrayList<ProductSku> productSkus;
 	
+	
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+		
 	
 	
 	public Integer getProductId() {

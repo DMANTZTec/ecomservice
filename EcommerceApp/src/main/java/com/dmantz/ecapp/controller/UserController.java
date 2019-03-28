@@ -60,7 +60,7 @@ public class UserController {
 	}
 
 	//UPDATE LAST NAME
-	@RequestMapping(value = "/updatePhoneNo", method = RequestMethod.PUT)
+	@RequestMapping(value = "/updateLastName", method = RequestMethod.PUT)
 	public User updateLastName(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
 		logger.info("Last Name is updated");
 		return userManagerServiceObj.updateLastName(createSignUpRequestPOObj);

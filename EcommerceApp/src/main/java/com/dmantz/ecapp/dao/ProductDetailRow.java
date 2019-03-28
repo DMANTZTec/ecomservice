@@ -2,6 +2,9 @@ package com.dmantz.ecapp.dao;
 
 public class ProductDetailRow {
 
+	
+	static int i=1;
+           int j=0;     	
 	Integer productId;
 	String productName;
 	String url;
@@ -53,6 +56,15 @@ public class ProductDetailRow {
 	public void setOptionValue(String optionValue) {
 		this.optionValue = optionValue;
 	}
-	
+	public boolean increment(ProductDetailRow pdr) {
+	if(this.equals(pdr)== false)
+			return false;
+	else
+		    return true;
+	}
+	public boolean equals(Object o) {
+	ProductDetailRow pdr=(ProductDetailRow)o;
+		return this.getProductId()==pdr.getProductId();
+	}
 	
 }
