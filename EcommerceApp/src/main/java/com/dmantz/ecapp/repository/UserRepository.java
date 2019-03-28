@@ -1,4 +1,4 @@
-package com.dmantz.ecapp.dao;
+package com.dmantz.ecapp.repository;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ import com.dmantz.ecapp.request.CreateSignUpRequestPO;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer>{
+
+	void save(CreateSignUpRequestPO createSignUpRequestPOObj);
 
 	
 

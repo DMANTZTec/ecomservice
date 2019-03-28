@@ -1,8 +1,11 @@
 package com.dmantz.ecapp.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,49 +13,69 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dmantz.ecapp.common.Order;
+import com.dmantz.ecapp.common.ShippingAddress;
 import com.dmantz.ecapp.request.CreateOrderRequestPO;
+import com.dmantz.ecapp.request.UpdateOrderRequest;
 import com.dmantz.ecapp.response.OrderResponse;
+import com.dmantz.ecapp.response.UpdateOrderResponse;
 import com.dmantz.ecapp.service.OrderManagerService;
 
 @RestController
 @RequestMapping(value="/EcommerceApp")
+
 public class OrderController {
 	
 	@Autowired
 	OrderManagerService orderManagerService;
-
-	@RequestMapping(value="/createOrder/{orderId}",method=RequestMethod.POST)
-	public OrderResponse createOrder(@PathVariable("orderId") int orderId,@RequestBody CreateOrderRequestPO createOrderRequestPO) {
-		System.out.println("oderid is"+orderId);
-		System.out.println("controller method called");
-		System.out.println("request object is"+createOrderRequestPO);
-		return orderManagerService.createOrder(orderId,createOrderRequestPO) ;
-		
-			}
+   
+	private static final Logger logger=LoggerFactory.getLogger(OrderController.class);
 	
+	@PostMapping(value="/saveOrder")
+	public Order saveOrder(@RequestBody CreateOrderRequestPO createOrderRequestPO) 
+	{
+				return orderManagerService.saveOrder(createOrderRequestPO);
+		
+	}
+	
+		
+	//mapping for createOrder2request
 	@RequestMapping(value="/createOrder2",method=RequestMethod.POST)
-	public OrderResponse createOrder2(@RequestBody CreateOrderRequestPO createOrderRequestPO) {
+	public OrderResponse createOrder2(@RequestBody CreateOrderRequestPO createOrderRequestPO) 
+	{
 
 
-		System.out.println("request object is"+createOrderRequestPO);		
+		logger.info("request object is"+createOrderRequestPO);		
 		return orderManagerService.createOrder2(createOrderRequestPO) ;
 		
 	}
 	
-	@GetMapping(value="/getOrder")
-	
-	public Order getOrder(@RequestParam("order_id") int order_id) {
+	//mapping for viewOrder
+	@GetMapping(value="/viewOrder")
+	public Order viewOrderByOrderId(@RequestParam("order_id") int order_id) {
 		return orderManagerService.getOrder(order_id);
 		
 	}
 	
+	//Request mapping for add shippingaddress
+	@PostMapping(value="/addShippingAddress")
+	public String addShippingAddress(@RequestBody ShippingAddress shippingAddress) {
+		orderManagerService.addShippingAddressByCustomerId(shippingAddress);
+		return  "hello";
+	}
 	
+	//Request mapping for updateOrderByQuantity
+	@PutMapping(value="/updateOrder")
+	public UpdateOrderResponse updateOrder(@RequestBody UpdateOrderRequest updateOrderRequest)
+	{
+		 return orderManagerService.updateOrder( updateOrderRequest);
+				
+	}
 	
+	//mapping for deleteOrder
 	@RequestMapping(value="/deleteOrder",method=RequestMethod.DELETE)
-	public String deleteOrder(@RequestParam("order_id") int order_id) {
-		//System.out.println("order id is"+order.getId());
-		
-		return orderManagerService.deleteOrder(order_id);
+	public void deleteOrder(@RequestParam("order_id") int order_id)
+	{
+		 orderManagerService.deleteOrder(order_id);
 		
 	}
 }
