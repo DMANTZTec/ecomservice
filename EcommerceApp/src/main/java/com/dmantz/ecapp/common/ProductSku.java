@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class ProductSku {
 
-String sku;
+Integer sku;
 ArrayList<Option> options;
 String image;
 String price;
 
 
-public String getSku() {
+public Integer getSku() {
 	return sku;
 }
-public void setSku(String sku) {
+public void setSku(Integer sku) {
 	this.sku = sku;
 }
 public ArrayList<Option> getOptions() {

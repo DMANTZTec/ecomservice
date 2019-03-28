@@ -2,6 +2,7 @@ package com.dmantz.ecapp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import com.dmantz.ecapp.dao.CatalogDAO;
 import com.dmantz.ecapp.dao.ProductDetailRow;
 import com.dmantz.ecapp.request.CatalogRequest;
 import com.dmantz.ecapp.response.CatalogResponse;
+
+//import javassist.bytecode.Descriptor.Iterator;
 
 
 
@@ -36,31 +39,110 @@ CatalogDAO catalogDAO;
 		
 		List<ProductDetailRow> productDetailRow=catalogDAO.showMenu(catalogReq);
 		
-		
 		/*List<ProductDetailRow> filteredProducts=productDetailRow.stream().filter(result -> result.getProductId()==productId ).collect(Collectors.toList());
 		*/
-		
 		//System.out.println("size of filteredProducts are: "+filteredProducts.size());
-		/*int i=1;
-		List<ProductDetailRow> filteredProducts=null;
 		
-		for(ProductDetailRow products:productDetailRow) { 
+		Map<Integer,List<ProductDetailRow>> mappedProducts=null;
+		//groupedProducts
+		mappedProducts=productDetailRow.stream().collect(Collectors.groupingBy(ProductDetailRow::getProductId));
+		//List<List<ProductDetailRow>> filteredProducts=filteredProducts.values().stream().filter(id->id.size()>=1).collect(Collectors.toList());		
+		/*
+		for each key in Map {
+		
+			Create a new Product
+			Add product level details using (0)th element of Product Detail Rows
+			
+			groupedProductSkus:
+			
+			for each key in Map {
+			
+				Create a new Product Sku Object
+				Add SKU details from (0)th element
+				For each row {
+					create a new Option Object
+					add Option to Product SKU
+				}
+				Add product SKU to Product
+			}
+				
+					
+		
+		*/
+		
+		//List<List<ProductDetailRow>> skuList=filteredSkus.values().stream().filter(id->id.size()>=1).collect(Collectors.toList());		
+	    //Map finalMap=new LinkedHashMap();
+		//filteredSkus.entrySet().stream().sorted(Map.Entry.<Integer,List<ProductDetailRow>>comparingByKey().reversed()).forEachOrdered(e->finalMap.put(e.getKey(), e.getValue()));
+        //System.out.println("finalMap is: "+finalMap);
+		
+        /*Map hashMap=filteredSkus;
+         filteredSkus.entrySet();
+         for(Object o: hashMap.entrySet())
+         {
+        	 Map.Entry<Integer,String> entry=(Entry<Integer, String>) o;
+           Integer key = entry.getKey();
+           //String value = entry.getValue();
+       System.out.println("keys are: "+key);
+         }
+        */
+		ArrayList retProductList=new ArrayList();
+		Product product=null;
+		ProductSku sku=null;
+		Option option=null;
+		int j=0;
+		for(Map.Entry<Integer,List<ProductDetailRow>> pro : mappedProducts.entrySet()) {  
+		
+		ArrayList skuList=new ArrayList();
+		
+		System.out.println("Number of Products:" + mappedProducts.size());
+		product=new Product();
+		ProductDetailRow pdr=pro.getValue().get(0);
+		product.setProductId(pdr.getProductId());
+		product.setProductName(pdr.getProductName());
+		Map<Integer,List<ProductDetailRow>> mappedSkus=null;
+		mappedSkus=pro.getValue().stream().collect(Collectors.groupingBy(ProductDetailRow::getProductSkuId));
+		System.out.println("Number of Rows for Product:" + mappedSkus.size());
+
+		for(Map.Entry<Integer,List<ProductDetailRow>> proSku:mappedSkus.entrySet()) {
+			ArrayList options=new ArrayList();
+			  sku=new ProductSku();			  
+			  ProductDetailRow pdrow=proSku.getValue().get(0);
+//			  System.out.println("pdrow product is: "+pdrow.getProductId()+" pdr product is: "+pdr.getProductId());
+//			  if(pdr.getProductId()==pdrow.getProductId()) {
+//				  
+				  System.out.println("inside ProductSku ");
+				  sku.setImage(pdrow.getUrl());
+				  sku.setPrice(pdrow.getPriceAmt().toString());
+				  sku.setSku(pdrow.getProductSkuId());
+// code for options started
+				  Map<String,List<ProductDetailRow>> mappedOptions=null;
+					mappedOptions=proSku.getValue().stream().collect(Collectors.groupingBy(ProductDetailRow::getOptionName));
+				  for(Map.Entry<String,List<ProductDetailRow>> opt:mappedOptions.entrySet()) {
+					option=new Option();
+					ProductDetailRow prow=opt.getValue().get(0);
+				    System.out.println("inside option's loop ");
+				    option.setOptionName(prow.getOptionName());
+				    option.setOptionValue(prow.getOptionValue());
+				    options.add(option);
+				    sku.setOptions(options);
+				  }
+// code for options	ended		  
+				  skuList.add(sku);  
+			      	  
+//			  }    
+                System.out.println("mappedSkus for loop is over and pdrow's productId is: "+pdrow.getProductId());
+		  }System.out.println("\n\n");
 		 
-		 
-		 
-		 
-		 filteredProducts=productDetailRow.stream().filter(result -> result.getProductId()==i).collect(Collectors.toList());
-		 System.out.println();
-		 i++; 
+			  
 		  
+		  product.setProductSkus(skuList);
+		  retProductList.add(product);
+		
 		}
-*/		List<Product> list=new ArrayList<Product>();
-		
-		
-		
 		
 		System.out.println("exit from CatalogService class.");
-		return list;
+		return retProductList;
 	}
+	
 }
 
