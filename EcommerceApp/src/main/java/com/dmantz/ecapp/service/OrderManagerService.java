@@ -8,10 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SystemPropertyUtils;
 
 import com.dmantz.ecapp.common.Order;
 import com.dmantz.ecapp.common.OrderItem;
 import com.dmantz.ecapp.common.ShippingAddress;
+import com.dmantz.ecapp.dao.OrderItemRepository;
 //import com.dmantz.ecapp.common.Order;
 import com.dmantz.ecapp.dao.OrderRepository;
 import com.dmantz.ecapp.request.CreateOrderRequestPO;
@@ -24,6 +26,9 @@ public class OrderManagerService {
 	
 	@Autowired
 	OrderRepository orderRepository;
+	
+	@Autowired
+	OrderItemRepository orderItemRepository;
 	
 	private static final Logger logger=LoggerFactory.getLogger(OrderManagerService.class);
 
@@ -98,17 +103,7 @@ public class OrderManagerService {
 	}
 
 
-	public String deleteOrder(int order_id) {
-			
-		Optional<Order> order=orderRepository.findById(order_id);
-		Order retOrder=order.get();
-		orderRepository.delete(retOrder);
-		//orderRepository.findOne(Example<Order> example);
 	
-		///orderRepository.deleteById(order.);
-		
-				return "order deleted successfully";
-	}
 
 	public Order getOrder(int order_id) {
 		Optional<Order> retOrder=orderRepository.findById(order_id);
@@ -143,39 +138,76 @@ public class OrderManagerService {
 			logger.info("update order"+updateOrderRequest.getUpdateQuantity());
 			Optional<Order> orderObj=orderRepository.findById(updateOrderRequest.getUpdateQuantity().getOrderId());
 			Order order1=orderObj.get();
-			System.out.println("returned database objects is"+order1);
+			logger.info("returned database objects is"+order1);
 			OrderItem orderItemObj=  order1.getOrderItemObj().get(0);
 			if((orderItemObj.getProductSku()).equals(updateOrderRequest.getUpdateQuantity().getProductSku()))
 					{
-				System.out.println("sku matched");
+				logger.info("sku matched");
 				orderItemObj.setQuantity(updateOrderRequest.getUpdateQuantity().getNewQuantity());
 				list.add(orderItemObj);
 				order1.setId(order1.getId());
 				order1.setOrderItemObj(list);
-				System.out.println("saving object "+order1);
+				logger.info("saving object "+order1);
 				
 				orderRepository.save(order1);
 							
 					}
 			
-		
+			
+		}
+		else if((updateOrderRequest.getAddItem())!=null)
+		{
+						logger.info("logic for add item");
+			
+						
+						orderItemRepository.findByProductSku("samsung-BK-5");
+						logger.info("orderItem corresponds to productsku is"+orderItemRepository.findByProductSku("SAMSUNG-BK-5"));
+						//if orderId exists for that customer no need of creating another order ,
+						//then add that item to existing order
+						
+					if((orderRepository.existsById(updateOrderRequest.getOrderId()))) {
+						logger.info("orderid exists ");
+						Optional<Order> obj=orderRepository.findById(updateOrderRequest.getOrderId());
+						Order retOrder=obj.get();
+						logger.info("order belongs to orderid is"+retOrder);
+						OrderItem iobj=new OrderItem();
+						//then add item fields to the orderItemInstance
+						iobj.setProductSku(updateOrderRequest.getAddItem().getProductSku());
+						iobj.setQuantity(updateOrderRequest.getAddItem().getQuantity());
+						iobj.setOrder_id(updateOrderRequest.getOrderId());
+						
+						logger.info("item object is"+iobj);
+						//insert the orderitem to the database
+						orderItemRepository.save(iobj);
+						
+						//orderRepository.save(retOrder);
+						
+						
+						
+						
+					}
+						
+							
+		}
+		else
+		{
+			logger.info("nothing");
+		}
 		
 		updateOrderResponse.setStatus("success");
-		updateOrderResponse.setTotalQuantity(updateOrderRequest.getUpdateQuantity().getNewQuantity());
-		
-		
-		
-			
-			
-		}
-		else if((updateOrderRequest.getAddItem())!=null) {
-						System.out.println("logic for add item");
-							}
-		else {
-			System.out.println("nothing");
-		}
-		
 					return updateOrderResponse;
+	}
+	
+	public String deleteOrder(int order_id) {
+		
+		Optional<Order> order=orderRepository.findById(order_id);
+		Order retOrder=order.get();
+		orderRepository.delete(retOrder);
+		//orderRepository.findOne(Example<Order> example);
+	
+		///orderRepository.deleteById(order.);
+		
+				return "order deleted successfully";
 	}
 
 }
