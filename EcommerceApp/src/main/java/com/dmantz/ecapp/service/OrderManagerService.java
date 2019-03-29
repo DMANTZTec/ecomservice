@@ -16,6 +16,7 @@ import com.dmantz.ecapp.common.ShippingAddress;
 import com.dmantz.ecapp.dao.OrderItemRepository;
 //import com.dmantz.ecapp.common.Order;
 import com.dmantz.ecapp.dao.OrderRepository;
+import com.dmantz.ecapp.dao.ShippingAddressRepository;
 import com.dmantz.ecapp.request.CreateOrderRequestPO;
 import com.dmantz.ecapp.request.UpdateOrderRequest;
 import com.dmantz.ecapp.response.OrderResponse;
@@ -29,6 +30,9 @@ public class OrderManagerService {
 	
 	@Autowired
 	OrderItemRepository orderItemRepository;
+	
+	@Autowired
+	ShippingAddressRepository shippingAddressRepository;
 	
 	private static final Logger logger=LoggerFactory.getLogger(OrderManagerService.class);
 
@@ -119,39 +123,38 @@ public class OrderManagerService {
 				return retOrder;
 	}
 
-	//service method for add shippingAddress
-	public void addShippingAddressByCustomerId(ShippingAddress shippingAddress) {
-			
-		
-	}
+	
 	
     //service method for updateorder
 	public UpdateOrderResponse updateOrder(UpdateOrderRequest updateOrderRequest) {
+		
 		//if updateOrderRequest.getUpdateQuantity is not null
 		//then put logic for updating quantity on order item based on Order/Product SKU.
 		UpdateOrderResponse updateOrderResponse=new UpdateOrderResponse();
 		if((updateOrderRequest.getUpdateQuantity())!=null) 
 			
 		{
-			List<OrderItem> list=new ArrayList();
-			logger.info("logic for update");
-			logger.info("update order"+updateOrderRequest.getUpdateQuantity());
-			Optional<Order> orderObj=orderRepository.findById(updateOrderRequest.getUpdateQuantity().getOrderId());
-			Order order1=orderObj.get();
-			logger.info("returned database objects is"+order1);
-			OrderItem orderItemObj=  order1.getOrderItemObj().get(0);
-			if((orderItemObj.getProductSku()).equals(updateOrderRequest.getUpdateQuantity().getProductSku()))
-					{
-				logger.info("sku matched");
-				orderItemObj.setQuantity(updateOrderRequest.getUpdateQuantity().getNewQuantity());
-				list.add(orderItemObj);
-				order1.setId(order1.getId());
-				order1.setOrderItemObj(list);
-				logger.info("saving object "+order1);
+			//checks for orderid exists in the repository or not
+			if(orderRepository.existsById(updateOrderRequest.getOrderId())) 
+			{
+				logger.info("orderId exists");
+	
+			//find the orderitem related to order_id and productsku
+		       OrderItem oiobj=	orderItemRepository.findByOrderIdAndProductSku(updateOrderRequest.getOrderId(),updateOrderRequest.getUpdateQuantity().getProductSku() );
+			   logger.info("obect regarding to productsku and orderid is"+oiobj);
+			 //then checks the object if it is not null update the quantity
+			   if(oiobj!=null) {
+				   //update the quantity
+				   oiobj.setQuantity(updateOrderRequest.getUpdateQuantity().getNewQuantity());
+				   logger.info("updated quantity object is"+oiobj);
+				   orderItemRepository.save(oiobj);
+				   updateOrderResponse.setStatus("quantity updated");
+			   }
+			   
+			   
 				
-				orderRepository.save(order1);
-							
-					}
+				//System.out.println("returned order"+iobj);
+			}
 			
 			
 		}
@@ -179,6 +182,7 @@ public class OrderManagerService {
 						logger.info("item object is"+iobj);
 						//insert the orderitem to the database
 						orderItemRepository.save(iobj);
+						updateOrderResponse.setStatus("item added");
 						
 						//orderRepository.save(retOrder);
 						
@@ -192,11 +196,19 @@ public class OrderManagerService {
 		else
 		{
 			logger.info("nothing");
+			updateOrderResponse.setStatus("no updates u given");
 		}
 		
-		updateOrderResponse.setStatus("success");
+		//updateOrderResponse.setStatus("success");
 					return updateOrderResponse;
 	}
+	
+	//service method for add shippingAddress
+		public void addShippingAddressByCustomerId(ShippingAddress shippingAddress) {
+				
+			System.out.println("shipping Address is"+shippingAddress.toString());
+			shippingAddressRepository.save(shippingAddress);
+		}
 	
 	public String deleteOrder(int order_id) {
 		

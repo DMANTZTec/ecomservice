@@ -1,5 +1,6 @@
 package com.dmantz.ecapp.common;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,8 @@ import javax.persistence.Table;
 public class ShippingAddress {
 	
 	@Id
+	
+	@Column(name="shipping_address_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
@@ -18,7 +21,7 @@ public class ShippingAddress {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private String mobileNo;
+	private double mobileNo;
 	private String flatNo;
 	private String area;
 	private String landmark;
@@ -61,10 +64,10 @@ public class ShippingAddress {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getMobileNo() {
+	public double getMobileNo() {
 		return mobileNo;
 	}
-	public void setMobileNo(String  mobileNo) {
+	public void setMobileNo(double  mobileNo) {
 		this.mobileNo = mobileNo;
 	}
 	public String getFlatNo() {
@@ -114,6 +117,19 @@ public class ShippingAddress {
 	}
 	public void setLastFlg(String lastFlg) {
 		this.lastFlg = lastFlg;
+	}
+	@Override
+	public String toString() {
+		return "ShippingAddress [id=" + id + ", customerId=" + customerId + ", firstName=" + firstName + ", middleName="
+				+ middleName + ", lastName=" + lastName + ", mobileNo=" + mobileNo + ", flatNo=" + flatNo + ", area="
+				+ area + ", landmark=" + landmark + ", city=" + city + ", state=" + state + ", pincode=" + pincode
+				+ ", primaryFlg=" + primaryFlg + ", lastFlg=" + lastFlg + ", getId()=" + getId() + ", getCustomerId()="
+				+ getCustomerId() + ", getFirstName()=" + getFirstName() + ", getMiddleName()=" + getMiddleName()
+				+ ", getLastName()=" + getLastName() + ", getMobileNo()=" + getMobileNo() + ", getFlatNo()="
+				+ getFlatNo() + ", getArea()=" + getArea() + ", getLandmark()=" + getLandmark() + ", getCity()="
+				+ getCity() + ", getState()=" + getState() + ", getPincode()=" + getPincode() + ", getPrimaryFlg()="
+				+ getPrimaryFlg() + ", getLastFlg()=" + getLastFlg() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
 	
 	
