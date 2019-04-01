@@ -204,10 +204,48 @@ public class OrderManagerService {
 	}
 	
 	//service method for add shippingAddress
-		public void addShippingAddressByCustomerId(ShippingAddress shippingAddress) {
+		public String addShippingAddressByCustomerId(ShippingAddress shippingAddress) {
 				
-			System.out.println("shipping Address is"+shippingAddress.toString());
-			shippingAddressRepository.save(shippingAddress);
+			logger.info("shipping Address is"+shippingAddress.toString());
+			//if shipping address exists for customer then update the shippingAddress 
+			//else save the new shipping address
+			if((shippingAddress.getId())!=0){
+				//then logic for update
+				logger.info("update logic");
+				logger.info("update the address");
+				
+				
+			ShippingAddress sobj=	shippingAddressRepository.findByCustomerIdAndId(shippingAddress.getCustomerId(),shippingAddress.getId() );
+			if(sobj!=null) {
+				shippingAddressRepository.save(shippingAddress);
+			}
+			else {
+				logger.error("please enter valid customerid and shippingid");
+			}
+			
+			
+			}
+			else {
+				//logger.info("else excuted");
+				logger.info("new address");
+				shippingAddressRepository.save(shippingAddress);
+			}
+			
+				//ShippingAddress sobj= shippingAddressRepository.findByCustomerId(shippingAddress.getCustomerId());
+				//logger.info("sobj is"+sobj);
+				/*if(sobj.equals(shippingAddress)) {
+					//logic for update
+					logger.info("logic for update");
+				}
+				else {
+					//logic for new order save
+					shippingAddressRepository.save(shippingAddress);
+					System.out.println("else ececuted");
+				}*/
+				
+			
+			//shippingAddressRepository.save(shippingAddress);
+			return "shipping Address added";
 		}
 	
 	public String deleteOrder(int order_id) {

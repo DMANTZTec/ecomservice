@@ -17,6 +17,7 @@ public class ShippingAddress {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
+	
 	private String customerId;
 	private String firstName;
 	private String middleName;
@@ -40,6 +41,8 @@ public class ShippingAddress {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
 	public String getCustomerId() {
 		return customerId;
 	}
