@@ -8,8 +8,14 @@ Integer sku;
 ArrayList<Option> options;
 String image;
 String price;
+String productSkuCode;
 
-
+public String getProductSkuCode() {
+	return productSkuCode;
+}
+public void setProductSkuCode(String productSkuCode) {
+	this.productSkuCode = productSkuCode;
+}
 public Integer getSku() {
 	return sku;
 }
