@@ -27,7 +27,8 @@ public class CatalogService {
 @Autowired
 CatalogDAO catalogDAO;
 	public CatalogResponse catalog(CatalogRequest catalogReq) {
-	    System.out.println("this is CatalogService's catalog(.) method.");
+	
+		System.out.println("this is CatalogService's catalog(.) method.");
 	    CatalogResponse cresObj= new CatalogResponse();
 		CatalogRequest creqObj= catalogReq;
         //cresObj.setFilterCriteria(creqObj.getFilterCriteria());
@@ -39,14 +40,12 @@ CatalogDAO catalogDAO;
 		
 		List<ProductDetailRow> productDetailRow=catalogDAO.showMenu(catalogReq);
 		
-		/*List<ProductDetailRow> filteredProducts=productDetailRow.stream().filter(result -> result.getProductId()==productId ).collect(Collectors.toList());
-		*/
-		//System.out.println("size of filteredProducts are: "+filteredProducts.size());
+		
 		
 		Map<Integer,List<ProductDetailRow>> mappedProducts=null;
 		//groupedProducts
 		mappedProducts=productDetailRow.stream().collect(Collectors.groupingBy(ProductDetailRow::getProductId));
-		//List<List<ProductDetailRow>> filteredProducts=filteredProducts.values().stream().filter(id->id.size()>=1).collect(Collectors.toList());		
+				
 		/*
 		for each key in Map {
 		
@@ -70,21 +69,7 @@ CatalogDAO catalogDAO;
 		
 		*/
 		
-		//List<List<ProductDetailRow>> skuList=filteredSkus.values().stream().filter(id->id.size()>=1).collect(Collectors.toList());		
-	    //Map finalMap=new LinkedHashMap();
-		//filteredSkus.entrySet().stream().sorted(Map.Entry.<Integer,List<ProductDetailRow>>comparingByKey().reversed()).forEachOrdered(e->finalMap.put(e.getKey(), e.getValue()));
-        //System.out.println("finalMap is: "+finalMap);
 		
-        /*Map hashMap=filteredSkus;
-         filteredSkus.entrySet();
-         for(Object o: hashMap.entrySet())
-         {
-        	 Map.Entry<Integer,String> entry=(Entry<Integer, String>) o;
-           Integer key = entry.getKey();
-           //String value = entry.getValue();
-       System.out.println("keys are: "+key);
-         }
-        */
 		ArrayList retProductList=new ArrayList();
 		Product product=null;
 		ProductSku sku=null;
@@ -114,6 +99,7 @@ CatalogDAO catalogDAO;
 				  sku.setImage(pdrow.getUrl());
 				  sku.setPrice(pdrow.getPriceAmt().toString());
 				  sku.setSku(pdrow.getProductSkuId());
+				  sku.setProductSkuCode(pdrow.getProductSkuCd());
 // code for options started
 				  Map<String,List<ProductDetailRow>> mappedOptions=null;
 					mappedOptions=proSku.getValue().stream().collect(Collectors.groupingBy(ProductDetailRow::getOptionName));
