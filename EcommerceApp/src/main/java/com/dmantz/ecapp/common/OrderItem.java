@@ -1,10 +1,12 @@
 package com.dmantz.ecapp.common;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * @author Mounika
@@ -23,12 +25,16 @@ public class OrderItem {
 	/*@ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "orderId")
     private  CreateOrderRequestPO order;*/
-	
+	@Column(name="order_id")
 	private int order_id;
 
 
 	private int productId;
+	
+	//@Column(unique=true)
+	@Column(name="productSku")
 	private String productSku;
+	
 	private String mrpPrice;
 	private String price;
 	private String discountApplied;

@@ -31,7 +31,7 @@ public class Order {
 	private List<OrderItem> orderItemObj;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
-	
+	@JoinColumn(name="shipping_address_id",referencedColumnName="shipping_address_id")
 	private ShippingAddress shippingAddress;
 
 	public List<OrderItem> getOrderItemObj() {
