@@ -59,8 +59,8 @@ public class OrderController {
 	//Request mapping for add shippingaddress
 	@PostMapping(value="/addShippingAddress")
 	public String addShippingAddress(@RequestBody ShippingAddress shippingAddress) {
-		orderManagerService.addShippingAddressByCustomerId(shippingAddress);
-		return  "hello";
+		return orderManagerService.addShippingAddressByCustomerId(shippingAddress);
+		
 	}
 	
 	//Request mapping for updateOrderByQuantity

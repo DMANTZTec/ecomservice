@@ -36,7 +36,7 @@ public class OrderItem {
 	private String productSku;
 	
 	private String mrpPrice;
-	private String price;
+	private double price;
 	private String discountApplied;
 	private String quantity;
 	private String giftWrapped;
@@ -73,12 +73,7 @@ public class OrderItem {
 	public void setMrpPrice(String mrpPrice) {
 		this.mrpPrice = mrpPrice;
 	}
-	public String getPrice() {
-		return price;
-	}
-	public void setPrice(String price) {
-		this.price = price;
-	}
+	
 	public String getDiscountApplied() {
 		return discountApplied;
 	}
@@ -103,17 +98,25 @@ public class OrderItem {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
 	@Override
 	public String toString() {
-		return "OrderItem [order_id=" + order_id + ", orderItemId=" + orderItemId + ", productId=" + productId
+		return "OrderItem [orderItemId=" + orderItemId + ", order_id=" + order_id + ", productId=" + productId
 				+ ", productSku=" + productSku + ", mrpPrice=" + mrpPrice + ", price=" + price + ", discountApplied="
 				+ discountApplied + ", quantity=" + quantity + ", giftWrapped=" + giftWrapped + ", productName="
 				+ productName + ", getOrder_id()=" + getOrder_id() + ", getOrderItemId()=" + getOrderItemId()
 				+ ", getProductId()=" + getProductId() + ", getProductSku()=" + getProductSku() + ", getMrpPrice()="
-				+ getMrpPrice() + ", getPrice()=" + getPrice() + ", getDiscountApplied()=" + getDiscountApplied()
-				+ ", getQuantity()=" + getQuantity() + ", getGiftWrapped()=" + getGiftWrapped() + ", getProductName()="
-				+ getProductName() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ getMrpPrice() + ", getDiscountApplied()=" + getDiscountApplied() + ", getQuantity()=" + getQuantity()
+				+ ", getGiftWrapped()=" + getGiftWrapped() + ", getProductName()=" + getProductName() + ", getPrice()="
+				+ getPrice() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
 	}
+	
+	
 
 }
