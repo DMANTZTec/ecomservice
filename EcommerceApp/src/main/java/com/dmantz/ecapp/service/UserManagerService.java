@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.dmantz.ecapp.common.User;
 import com.dmantz.ecapp.repository.UserRepository;
 import com.dmantz.ecapp.request.CreateSignUpRequestPO;
+import com.dmantz.ecapp.response.UserRegistrationRes;
 
 @Service
 public class UserManagerService {
@@ -20,9 +21,10 @@ public class UserManagerService {
 	UserRepository userRepositoryObj;
 
 	//SAVE METHOD 
-	public String register(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
+	public UserRegistrationRes register(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
 
 		User userObj = new User();
+		UserRegistrationRes userRegistrationRes=new UserRegistrationRes();
 
 		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
 		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
@@ -30,8 +32,9 @@ public class UserManagerService {
 		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
 		userRepositoryObj.save(userObj);
-
-		return "registration Sucessful";
+		userRegistrationRes.setStatus("registration Sucessful");
+        System.out.println(userRegistrationRes.toString());
+		return userRegistrationRes;
 	}
 	//GET METHOD by EmailId
 	//	public User getUserEId(String email_id) {
