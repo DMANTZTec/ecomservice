@@ -99,7 +99,7 @@ CatalogDAO catalogDAO;
 				  sku.setImage(pdrow.getUrl());
 				  sku.setPrice(pdrow.getPriceAmt().toString());
 				  sku.setSku(pdrow.getProductSkuId());
-				  sku.setProductSkuCode(pdrow.getProductSkuCd());
+				//  sku.setProductSkuCode(pdrow.getProductSkuId());
 // code for options started
 				  Map<String,List<ProductDetailRow>> mappedOptions=null;
 					mappedOptions=proSku.getValue().stream().collect(Collectors.groupingBy(ProductDetailRow::getOptionName));
