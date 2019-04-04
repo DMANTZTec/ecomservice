@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Mounika
@@ -26,6 +26,7 @@ public class OrderItem {
     @JoinColumn(name = "orderId")
     private  CreateOrderRequestPO order;*/
 	@Column(name="order_id")
+	@NotNull
 	private int order_id;
 
 
