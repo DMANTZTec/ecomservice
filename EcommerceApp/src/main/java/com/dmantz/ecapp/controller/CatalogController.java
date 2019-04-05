@@ -22,8 +22,8 @@ public class CatalogController {
 	CatalogService catalogService;
 	
 	
-	@RequestMapping(value="ec/catalog",method=RequestMethod.POST) 
-	public CatalogResponse catalog(@RequestBody CatalogRequest catalogReq) {
+	@RequestMapping(value="ec/product",method=RequestMethod.POST) 
+	public CatalogResponse product(@RequestBody CatalogRequest catalogReq) {
 		System.out.println("this is CatalogController's catalog(.) method. ");
 	    	
 		/* CatalogService cs=new CatalogService();
@@ -31,14 +31,14 @@ public class CatalogController {
 		
 		//CatalogService catalogserviceObj=new CatalogService();
          
-		return catalogService.catalog(catalogReq);
+		return catalogService.product(catalogReq);
 	}
-   @RequestMapping(value="ec/product",method=RequestMethod.POST)
-   public CatalogResponse product(@RequestBody CatalogRequest catalogReq) {
+   @RequestMapping(value="ec/catalog",method=RequestMethod.POST)
+   public CatalogResponse catalog(@RequestBody CatalogRequest catalogReq) {
 	  
 	System.out.println(" you have entered into product(.) method in class CatalogController.");
     //CatalogService catalogServiceObj=new CatalogService();
-   ArrayList products=(ArrayList)catalogService.product(catalogReq);
+   ArrayList products=(ArrayList)catalogService.catalog(catalogReq);
     CatalogResponse catalogResponse=new CatalogResponse();
     catalogResponse.setProducts(products);
 	return catalogResponse;
