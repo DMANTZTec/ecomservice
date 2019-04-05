@@ -10,5 +10,6 @@ import com.dmantz.ecapp.common.OrderItem;
 public interface OrderItemRepository extends JpaRepository<OrderItem,Integer>{
 	public List<OrderItem> findByProductSku(String productSku);
 	@Query(value="select o from OrderItem o where o.order_id=?1 and o.productSku=?2")
-	public OrderItem findByOrderIdAndProductSku(int order_id,String productSku);	
+	public OrderItem findByOrderIdAndProductSku(int order_id,String productSku);
+	
 	}

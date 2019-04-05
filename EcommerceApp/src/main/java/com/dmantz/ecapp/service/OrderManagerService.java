@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.SystemPropertyUtils;
 
+import com.dmantz.ecapp.common.AddItem;
 import com.dmantz.ecapp.common.Order;
 import com.dmantz.ecapp.common.OrderItem;
 import com.dmantz.ecapp.common.ShippingAddress;
@@ -131,6 +132,7 @@ public class OrderManagerService {
 		//if updateOrderRequest.getUpdateQuantity is not null
 		//then put logic for updating quantity on order item based on Order/Product SKU.
 		UpdateOrderResponse updateOrderResponse=new UpdateOrderResponse();
+		
 		if((updateOrderRequest.getUpdateQuantity())!=null) 
 			
 		{
@@ -160,38 +162,36 @@ public class OrderManagerService {
 		}
 		else if((updateOrderRequest.getAddItem())!=null)
 		{
-						logger.info("logic for add item");
+				logger.info("logic for add item");
 			
+				//if orderId exists for that customer no need of creating another order ,
+				//then add that item to existing order
+				OrderItem orderItem=orderItemRepository.findByOrderIdAndProductSku(updateOrderRequest.getOrderId(), updateOrderRequest.getAddItem().getOrderItem().getProductSku());
+				System.out.println(orderItem);	
+				if(orderItem!=null) 
+				{
+					logger.info("entry exists");
+					//if it is exists then update the whole object with newone
+					orderItem.setProductId(updateOrderRequest.getAddItem().getOrderItem().getProductId());
+				    orderItem.setPrice(updateOrderRequest.getAddItem().getOrderItem().getPrice());
+				    orderItem.setProductName(updateOrderRequest.getAddItem().getOrderItem().getProductName());
+				    orderItem.setQuantity(updateOrderRequest.getAddItem().getOrderItem().getQuantity());
+				    orderItem.setGiftWrapped(updateOrderRequest.getAddItem().getOrderItem().getGiftWrapped());
+				    orderItem.setMrpPrice(updateOrderRequest.getAddItem().getOrderItem().getMrpPrice());
+				    orderItem.setDiscountApplied(updateOrderRequest.getAddItem().getOrderItem().getDiscountApplied());
+				    orderItemRepository.save(orderItem);
+				    updateOrderResponse.setStatus("orderitem object updated bcz productsku exists for that order");
+				}
+				else 
+				{
+					//not exists in database save the new one
+					
+					OrderItem orderItemReq=updateOrderRequest.getAddItem().getOrderItem();
+					orderItemReq.setOrder_id(updateOrderRequest.getOrderId());
+					orderItemRepository.save(orderItemReq);
+					updateOrderResponse.setStatus("item added");
+				}
 						
-						orderItemRepository.findByProductSku("samsung-BK-5");
-						logger.info("orderItem corresponds to productsku is"+orderItemRepository.findByProductSku("SAMSUNG-BK-5"));
-						//if orderId exists for that customer no need of creating another order ,
-						//then add that item to existing order
-						
-					if((orderRepository.existsById(updateOrderRequest.getOrderId()))) {
-						logger.info("orderid exists ");
-						Optional<Order> obj=orderRepository.findById(updateOrderRequest.getOrderId());
-						Order retOrder=obj.get();
-						logger.info("order belongs to orderid is"+retOrder);
-						OrderItem iobj=new OrderItem();
-						//then add item fields to the orderItemInstance
-						iobj.setProductSku(updateOrderRequest.getAddItem().getProductSku());
-						iobj.setQuantity(updateOrderRequest.getAddItem().getQuantity());
-						iobj.setOrder_id(updateOrderRequest.getOrderId());
-						
-						logger.info("item object is"+iobj);
-						//insert the orderitem to the database
-						orderItemRepository.save(iobj);
-						updateOrderResponse.setStatus("item added");
-						
-						//orderRepository.save(retOrder);
-						
-						
-						
-						
-					}
-						
-							
 		}
 		else
 		{
@@ -204,16 +204,57 @@ public class OrderManagerService {
 	}
 	
 	//service method for add shippingAddress
-		public void addShippingAddressByCustomerId(ShippingAddress shippingAddress) {
+		public String addShippingAddressByCustomerId(ShippingAddress shippingAddress) {
 				
-			System.out.println("shipping Address is"+shippingAddress.toString());
-			shippingAddressRepository.save(shippingAddress);
+			logger.info("shipping Address is"+shippingAddress.toString());
+			//if shipping address exists for customer then update the shippingAddress 
+			//else save the new shipping address
+			if((shippingAddress.getId())!=0){
+				//then logic for update
+				logger.info("update logic");
+				logger.info("update the address");
+				
+				
+			ShippingAddress sobj=	shippingAddressRepository.findByCustomerIdAndId(shippingAddress.getCustomerId(),shippingAddress.getId() );
+			if(sobj!=null) {
+				shippingAddressRepository.save(shippingAddress);
+			}
+			else {
+				logger.error("please enter valid customerid and shippingid");
+			}
+			
+			
+			}
+			else {
+				//logger.info("else excuted");
+				logger.info("new address");
+				shippingAddressRepository.save(shippingAddress);
+			}
+			
+				//ShippingAddress sobj= shippingAddressRepository.findByCustomerId(shippingAddress.getCustomerId());
+				//logger.info("sobj is"+sobj);
+				/*if(sobj.equals(shippingAddress)) {
+					//logic for update
+					logger.info("logic for update");
+				}
+				else {
+					//logic for new order save
+					shippingAddressRepository.save(shippingAddress);
+					System.out.println("else ececuted");
+				}*/
+				
+			
+			//shippingAddressRepository.save(shippingAddress);
+			return "shipping Address added";
 		}
 	
 	public String deleteOrder(int order_id) {
 		
 		Optional<Order> order=orderRepository.findById(order_id);
+		// orderItemRepository.delete(entity);
+		
 		Order retOrder=order.get();
+		
 		orderRepository.delete(retOrder);
 		//orderRepository.findOne(Example<Order> example);
 	

@@ -26,13 +26,15 @@ public class Order {
 	@Column(name="order_id")
 	private int id;
 	
-	@OneToMany(cascade= CascadeType.ALL)
+	@OneToMany(cascade= CascadeType.ALL,orphanRemoval = true)
 	@JoinColumn(name="order_id",referencedColumnName="order_id")
 	private List<OrderItem> orderItemObj;
+	 
+	private int shippingAddressId;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="shipping_address_id",referencedColumnName="shipping_address_id")
-	private ShippingAddress shippingAddress;
+	/*@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="shipping_address_id",referencedColumnName="order_id")
+	private ShippingAddress shippingAddress;*/
 
 	public List<OrderItem> getOrderItemObj() {
 		return orderItemObj;
@@ -44,12 +46,13 @@ public class Order {
 
 	
 	
-	public ShippingAddress getShippingAddress() {
-		return shippingAddress;
+	
+	public int getShippingAddressId() {
+		return shippingAddressId;
 	}
 
-	public void setShippingAddress(ShippingAddress shippingAddress) {
-		this.shippingAddress = shippingAddress;
+	public void setShippingAddressId(int shippingAddressId) {
+		this.shippingAddressId = shippingAddressId;
 	}
 
 	public String getCustomerId() {

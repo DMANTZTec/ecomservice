@@ -1,18 +1,12 @@
 package com.dmantz.ecapp.common;
 
 public class UpdateQuantity {
-	private int orderId;
+	
 	private String productSku;
 	private String newQuantity;
 	
 	
-	public int getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-		public String getProductSku() {
+			public String getProductSku() {
 		return productSku;
 	}
 	public void setProductSku(String productSku) {
@@ -26,9 +20,11 @@ public class UpdateQuantity {
 	}
 	@Override
 	public String toString() {
-		return "UpdateQuantity [orderId=" + orderId + ", productSku=" + productSku + ", newQuantity=" + newQuantity
-				+ "]";
+		return "UpdateQuantity [productSku=" + productSku + ", newQuantity=" + newQuantity + ", getProductSku()="
+				+ getProductSku() + ", getNewQuantity()=" + getNewQuantity() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
 	
 	
 	
