@@ -136,18 +136,17 @@ public class OrderManagerService {
 		if((updateOrderRequest.getUpdateQuantity())!=null) 
 			
 		{
-			//checks for orderid exists in the repository or not
+			
 			if(orderRepository.existsById(updateOrderRequest.getOrderId())) 
 			{
 				logger.info("orderId exists");
 	
-			//find the orderitem related to order_id and productsku
+			
 		       OrderItem oiobj=	orderItemRepository.findByOrderIdAndProductSku(updateOrderRequest.getOrderId(),updateOrderRequest.getUpdateQuantity().getProductSku() );
 			   logger.info("obect regarding to productsku and orderid is"+oiobj);
-			 //then checks the object if it is not null update the quantity
+			 
 			   if(oiobj!=null) {
-				   //update the quantity
-				   oiobj.setQuantity(updateOrderRequest.getUpdateQuantity().getNewQuantity());
+				   	oiobj.setQuantity(updateOrderRequest.getUpdateQuantity().getNewQuantity());
 				   logger.info("updated quantity object is"+oiobj);
 				   orderItemRepository.save(oiobj);
 				   updateOrderResponse.setStatus("quantity updated");
@@ -171,7 +170,7 @@ public class OrderManagerService {
 				if(orderItem!=null) 
 				{
 					logger.info("entry exists");
-					//if it is exists then update the whole object with newone
+					
 					orderItem.setProductId(updateOrderRequest.getAddItem().getOrderItem().getProductId());
 				    orderItem.setPrice(updateOrderRequest.getAddItem().getOrderItem().getPrice());
 				    orderItem.setProductName(updateOrderRequest.getAddItem().getOrderItem().getProductName());
@@ -184,8 +183,7 @@ public class OrderManagerService {
 				}
 				else 
 				{
-					//not exists in database save the new one
-					
+										
 					OrderItem orderItemReq=updateOrderRequest.getAddItem().getOrderItem();
 					orderItemReq.setOrder_id(updateOrderRequest.getOrderId());
 					orderItemRepository.save(orderItemReq);
@@ -195,7 +193,7 @@ public class OrderManagerService {
 		}
 		else
 		{
-			logger.info("nothing");
+			logger.info("no updates you given");
 			updateOrderResponse.setStatus("no updates u given");
 		}
 		
@@ -210,7 +208,7 @@ public class OrderManagerService {
 			//if shipping address exists for customer then update the shippingAddress 
 			//else save the new shipping address
 			if((shippingAddress.getId())!=0){
-				//then logic for update
+				
 				logger.info("update logic");
 				logger.info("update the address");
 				
