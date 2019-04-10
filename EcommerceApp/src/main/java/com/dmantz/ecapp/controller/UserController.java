@@ -43,10 +43,11 @@ public class UserController {
 		return userManagerServiceObj.getUser(user_id);
 	}
 	//GET USER USING EMAILID
-	//	@GetMapping(value="/getUser/emailId")
-	//	public User getUserEId(@RequestParam("email_id") String email_id) {
-	//		return userManagerServiceObj.getUserEId(email_id);
-	//	}
+	@GetMapping(value="/getUser/emailId")
+	public User getUserEId(@RequestParam("email_id") String email_id) {
+		logger.info("Selected User Details Are Displayed Using Email_Id");
+		return userManagerServiceObj.getUserEId(email_id);
+	}
 
 	//DELETE USER
 	@RequestMapping(value="/deleteUser",method=RequestMethod.DELETE)
