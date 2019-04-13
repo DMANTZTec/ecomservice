@@ -31,6 +31,7 @@ public class ProductSkuRO {
 	private String imageUrl;
 
 	private double price;
+	
 	private int productId;
 
 	private String productSkuCd;

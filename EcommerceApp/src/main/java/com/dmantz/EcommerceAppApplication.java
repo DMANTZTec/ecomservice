@@ -23,7 +23,7 @@ public class EcommerceAppApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				//System.out.println
-				registry.addMapping("/**").allowedOrigins("https://localhost:4200");
+				registry.addMapping("/**").allowedOrigins("https://192.168.0.100:4200");
 				
 			}
 		};

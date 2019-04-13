@@ -1,10 +1,22 @@
 package com.dmantz.ecapp.controller;
 
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
+
+import javax.swing.plaf.metal.MetalIconFactory.FolderIcon16;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +27,11 @@ import com.dmantz.ecapp.request.CatalogRequest;
 import com.dmantz.ecapp.response.CatalogResponse;
 import com.dmantz.ecapp.service.CatalogService;
 
+
+
 @RestController
+
+@CrossOrigin(origins="http://192.168.0.100:4200")
 public class CatalogController {
 	
 	@Autowired
@@ -43,4 +59,37 @@ public class CatalogController {
     catalogResponse.setProducts(products);
 	return catalogResponse;
    }
+  
+   
+   @RequestMapping(value = "/image/{id}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
+   public ResponseEntity<byte[]> getImage(@PathVariable("id") String pathVarNumber) throws IOException {
+	   
+	   
+	  
+	   ClassLoader classLoader= getClass().getClassLoader(); 
+	   File folder=new File(classLoader.getResource("images").getFile());
+	   File[] fileNames=folder.listFiles();
+	   System.out.println("list of files are: "+fileNames.length);
+	   
+	   String relativePath=null;
+	   for(File fn:fileNames) {
+	   String fileName=fn.getName();
+	   if(fileName.contains(pathVarNumber)) {
+		System.out.println(fileName); 
+	     relativePath=fileName;
+	   }
+	   
+	   }
+       
+	   
+	   
+	   ClassPathResource imgFile = new ClassPathResource("images/"+relativePath);
+        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+
+       return ResponseEntity
+               .ok()
+               .contentType(MediaType.IMAGE_JPEG)
+               .body(bytes);
+   }
+   
 }
