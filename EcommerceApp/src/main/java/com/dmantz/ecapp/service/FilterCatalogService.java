@@ -1,45 +1,35 @@
-
 package com.dmantz.ecapp.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dmantz.ecapp.common.Option;
 import com.dmantz.ecapp.common.Product;
 import com.dmantz.ecapp.common.ProductSku;
-import com.dmantz.ecapp.dao.CatalogDAO;
+import com.dmantz.ecapp.dao.FilterCatalogDAO;
 import com.dmantz.ecapp.dao.ProductDetailRow;
-import com.dmantz.ecapp.request.CatalogRequest;
-import com.dmantz.ecapp.response.CatalogResponse;
-
-//import javassist.bytecode.Descriptor.Iterator;
-
-
 
 @Service
-public class CatalogService {
+public class FilterCatalogService {
 	
-
-@Autowired
-CatalogDAO catalogDAO;
-	public CatalogResponse product(CatalogRequest catalogReq) {
+	@Autowired
+	FilterCatalogDAO filterCatalogDAO;
 	
-		System.out.println("this is CatalogService's catalog(.) method.");
-	    CatalogResponse cresObj= new CatalogResponse();
-		CatalogRequest creqObj= catalogReq;
-        //cresObj.setFilterCriteria(creqObj.getFilterCriteria());
-        /*cresObj.setProducts(creqObj.getProducts());*/
-		return cresObj;
-	}
-	public List<Product> catalog(CatalogRequest catalogReq) {
-		System.out.println("entered into product() method in class CatalogService. ");
+	public List<Product> filter(JSONObject catalogReq) {
+		System.out.println(" you have entered into class FilterCatalog's filter(.) method. ");
+		JSONObject filterJSONObj=new JSONObject(catalogReq);
+		LinkedHashMap criteriaObj=(LinkedHashMap) filterJSONObj.get("filterCriteria");
+		 Integer price=(Integer) criteriaObj.get("price");
+		System.out.println("value of price is: "+price);
 		
-		List<ProductDetailRow> productDetailRow=catalogDAO.showMenu(catalogReq);
+List<ProductDetailRow> productDetailRow=filterCatalogDAO.filter(price);
 		
 		
 		
@@ -129,8 +119,6 @@ CatalogDAO catalogDAO;
 		
 		System.out.println("exit from CatalogService class.");
 		return retProductList;
+		
 	}
-	
-	
 }
-

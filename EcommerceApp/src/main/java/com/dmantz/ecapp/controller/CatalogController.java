@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
 
 import javax.swing.plaf.metal.MetalIconFactory.FolderIcon16;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -26,6 +27,7 @@ import com.dmantz.ecapp.common.Product;
 import com.dmantz.ecapp.request.CatalogRequest;
 import com.dmantz.ecapp.response.CatalogResponse;
 import com.dmantz.ecapp.service.CatalogService;
+import com.dmantz.ecapp.service.FilterCatalogService;
 
 
 
@@ -37,6 +39,8 @@ public class CatalogController {
 	@Autowired
 	CatalogService catalogService;
 	
+	@Autowired
+	FilterCatalogService filterCatalog;
 	
 	@RequestMapping(value="ec/product",method=RequestMethod.POST) 
 	public CatalogResponse product(@RequestBody CatalogRequest catalogReq) {
@@ -92,4 +96,15 @@ public class CatalogController {
                .body(bytes);
    }
    
+   
+   @RequestMapping(value="ec/filterCatalog",method=RequestMethod.POST)
+   public CatalogResponse filterCatalog(@RequestBody JSONObject catalogReq) {
+		  System.out.println("this is CatalogController class's filterCatalog(.) method. ");
+	
+	   
+		ArrayList products=(ArrayList)filterCatalog.filter(catalogReq);
+	    CatalogResponse catalogResponse=new CatalogResponse();
+	    catalogResponse.setProducts(products);
+		return catalogResponse;
+	   }
 }

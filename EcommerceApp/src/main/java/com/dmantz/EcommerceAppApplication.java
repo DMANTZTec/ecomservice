@@ -17,16 +17,4 @@ public class EcommerceAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EcommerceAppApplication.class, args);
 	}
-	@SuppressWarnings("deprecation")
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurerAdapter() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				//System.out.println
-				registry.addMapping("/**").allowedOrigins("https://192.168.0.100:4200");
-				
-			}
-		};
-
 	}
-}
