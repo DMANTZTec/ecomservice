@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +24,13 @@ public class FilterCatalogService {
 	@Autowired
 	FilterCatalogDAO filterCatalogDAO;
 	
-	public List<Product> filter(JSONObject catalogReq) {
-		System.out.println(" you have entered into class FilterCatalog's filter(.) method. ");
-		JSONObject filterJSONObj=new JSONObject(catalogReq);
-		LinkedHashMap criteriaObj=(LinkedHashMap) filterJSONObj.get("filterCriteria");
-		 Integer price=(Integer) criteriaObj.get("price");
-		System.out.println("value of price is: "+price);
+	Logger logger=LoggerFactory.getLogger(FilterCatalogService.class);
+	
+	
+	public List<Product> filter(int catalog_id) {
+		logger.info(" you have entered into class FilterCatalog's filter(.) method. ");
 		
-List<ProductDetailRow> productDetailRow=filterCatalogDAO.filter(price);
+List<ProductDetailRow> productDetailRow=filterCatalogDAO.filter(catalog_id);
 		
 		
 		
@@ -117,8 +118,9 @@ List<ProductDetailRow> productDetailRow=filterCatalogDAO.filter(price);
 		
 		}
 		
-		System.out.println("exit from CatalogService class.");
+		logger.info("exit from CatalogService class.");
 		return retProductList;
+
 		
-	}
-}
+		
+	}}

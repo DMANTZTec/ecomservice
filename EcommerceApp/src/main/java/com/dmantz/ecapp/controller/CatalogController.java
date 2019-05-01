@@ -10,6 +10,8 @@ import java.util.StringTokenizer;
 import javax.swing.plaf.metal.MetalIconFactory.FolderIcon16;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dmantz.ecapp.common.Product;
+import com.dmantz.ecapp.dao.FilterCatalogDAO;
 import com.dmantz.ecapp.request.CatalogRequest;
 import com.dmantz.ecapp.response.CatalogResponse;
 import com.dmantz.ecapp.service.CatalogService;
@@ -42,6 +45,9 @@ public class CatalogController {
 	@Autowired
 	FilterCatalogService filterCatalog;
 	
+	Logger logger=LoggerFactory.getLogger(CatalogController.class);
+	
+	
 	@RequestMapping(value="ec/product",method=RequestMethod.POST) 
 	public CatalogResponse product(@RequestBody CatalogRequest catalogReq) {
 		System.out.println("this is CatalogController's catalog(.) method. ");
@@ -56,7 +62,7 @@ public class CatalogController {
    @RequestMapping(value="ec/catalog",method=RequestMethod.POST)
    public CatalogResponse catalog(@RequestBody CatalogRequest catalogReq) {
 	  
-	System.out.println(" you have entered into product(.) method in class CatalogController.");
+	logger.info(" you have entered into product(.) method in class CatalogController.");
     //CatalogService catalogServiceObj=new CatalogService();
    ArrayList products=(ArrayList)catalogService.catalog(catalogReq);
     CatalogResponse catalogResponse=new CatalogResponse();
@@ -97,12 +103,12 @@ public class CatalogController {
    }
    
    
-   @RequestMapping(value="ec/filterCatalog",method=RequestMethod.POST)
-   public CatalogResponse filterCatalog(@RequestBody JSONObject catalogReq) {
-		  System.out.println("this is CatalogController class's filterCatalog(.) method. ");
+   @RequestMapping(value="ec/filterCatalog/{catalog_id}",method=RequestMethod.POST)
+   public CatalogResponse filterCatalog(@PathVariable("catalog_id") int catalog_id) {
+		  logger.info("this is CatalogController class's filterCatalog(.) method. ");
 	
 	   
-		ArrayList products=(ArrayList)filterCatalog.filter(catalogReq);
+		ArrayList products=(ArrayList)filterCatalog.filter(catalog_id);
 	    CatalogResponse catalogResponse=new CatalogResponse();
 	    catalogResponse.setProducts(products);
 		return catalogResponse;

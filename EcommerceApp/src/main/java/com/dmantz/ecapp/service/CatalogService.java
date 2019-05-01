@@ -39,7 +39,7 @@ CatalogDAO catalogDAO;
 	public List<Product> catalog(CatalogRequest catalogReq) {
 		System.out.println("entered into product() method in class CatalogService. ");
 		
-		List<ProductDetailRow> productDetailRow=catalogDAO.showMenu(catalogReq);
+		List<ProductDetailRow> productDetailRow=catalogDAO.getProductList(catalogReq);
 		
 		
 		

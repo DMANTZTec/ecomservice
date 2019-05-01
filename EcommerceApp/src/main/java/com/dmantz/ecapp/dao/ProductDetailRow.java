@@ -3,6 +3,9 @@ package com.dmantz.ecapp.dao;
 
 public class ProductDetailRow {
 
+	public Integer parentCatalogId;
+	public Integer level;
+	public Integer catalog_id;
 	Integer productId;
 	String productName;
 	String url;
@@ -11,6 +14,22 @@ public class ProductDetailRow {
 	String productSkuCd;
 	String optionName;
 	String optionValue;
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public Integer getCatalog_id() {
+		return catalog_id;
+	}
+
+	public void setCatalog_id(Integer catalog_id) {
+		this.catalog_id = catalog_id;
+	}
 
 	public String getProductSkuCd() {
 		return productSkuCd;
@@ -76,5 +95,12 @@ public class ProductDetailRow {
 		this.optionValue = optionValue;
 	}
 
-}
+	public Integer getParentCatalogId() {
+		return parentCatalogId;
+	}
 
+	public void setParentCatalogId(Integer parentCatalogId) {
+		this.parentCatalogId = parentCatalogId;
+	}
+
+}
