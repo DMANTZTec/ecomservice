@@ -1,3 +1,4 @@
+
 package com.dmantz.ecapp.common;
 
 import java.util.ArrayList;
@@ -6,9 +7,18 @@ public class ProductSku {
 
 Integer sku;
 ArrayList<Option> options;
-String image;
+String Image;
 String price;
 String productSkuCode;
+
+public String getImage() {
+
+	return Image;
+}
+public void setImage(String image) {
+
+	Image = image;
+}
 
 public String getProductSkuCode() {
 	return productSkuCode;
@@ -28,12 +38,6 @@ public ArrayList<Option> getOptions() {
 public void setOptions(ArrayList<Option> options) {
 	this.options = options;
 }
-public String getImage() {
-	return image;
-}
-public void setImage(String image) {
-	this.image = image;
-}
 public String getPrice() {
 	return price;
 }
@@ -44,3 +48,4 @@ public void setPrice(String price) {
 
 
 }
+

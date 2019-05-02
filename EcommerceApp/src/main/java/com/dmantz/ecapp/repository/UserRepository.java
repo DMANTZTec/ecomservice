@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 
 	void save(CreateSignUpRequestPO createSignUpRequestPOObj);
 
-	
+	User findByEmailId(String emailId);
+
+
 
 }

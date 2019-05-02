@@ -1,3 +1,4 @@
+
 package com.dmantz.ecapp.service;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class CatalogService {
 
 @Autowired
 CatalogDAO catalogDAO;
-	public CatalogResponse catalog(CatalogRequest catalogReq) {
+	public CatalogResponse product(CatalogRequest catalogReq) {
 	
 		System.out.println("this is CatalogService's catalog(.) method.");
 	    CatalogResponse cresObj= new CatalogResponse();
@@ -35,10 +36,10 @@ CatalogDAO catalogDAO;
         /*cresObj.setProducts(creqObj.getProducts());*/
 		return cresObj;
 	}
-	public List<Product> product(CatalogRequest catalogReq) {
+	public List<Product> catalog(CatalogRequest catalogReq) {
 		System.out.println("entered into product() method in class CatalogService. ");
 		
-		List<ProductDetailRow> productDetailRow=catalogDAO.showMenu(catalogReq);
+		List<ProductDetailRow> productDetailRow=catalogDAO.getProductList(catalogReq);
 		
 		
 		
@@ -129,6 +130,7 @@ CatalogDAO catalogDAO;
 		System.out.println("exit from CatalogService class.");
 		return retProductList;
 	}
+	
 	
 }
 
