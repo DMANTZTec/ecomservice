@@ -1,6 +1,8 @@
 package com.dmantz.ecapp.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.SystemPropertyUtils;
 
 import com.dmantz.ecapp.common.AddItem;
+import com.dmantz.ecapp.common.Coupon;
 import com.dmantz.ecapp.common.Order;
 import com.dmantz.ecapp.common.OrderItem;
 import com.dmantz.ecapp.common.ShippingAddress;
@@ -18,16 +21,24 @@ import com.dmantz.ecapp.dao.OrderItemRepository;
 //import com.dmantz.ecapp.common.Order;
 import com.dmantz.ecapp.dao.OrderRepository;
 import com.dmantz.ecapp.dao.ShippingAddressRepository;
+import com.dmantz.ecapp.repository.CouponRepository;
+import com.dmantz.ecapp.request.CouponRequest;
 import com.dmantz.ecapp.request.CreateOrderRequestPO;
 import com.dmantz.ecapp.request.UpdateOrderRequest;
 import com.dmantz.ecapp.response.OrderResponse;
 import com.dmantz.ecapp.response.UpdateOrderResponse;
+import com.dmantz.ecapp.response.ViewOrderResponse;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Service
 public class OrderManagerService {
 	
 	@Autowired
 	OrderRepository orderRepository;
+	
+	@Autowired
+	CouponRepository couponRepository;
 	
 	@Autowired
 	OrderItemRepository orderItemRepository;
@@ -110,10 +121,27 @@ public class OrderManagerService {
 
 	
 
-	public Order getOrder(int order_id) {
+	public ViewOrderResponse getOrder(int order_id) {
+		
+		ViewOrderResponse viewOrderResponse=new ViewOrderResponse();
 		Optional<Order> retOrder=orderRepository.findById(order_id);
-		Order obj=retOrder.get();
-				return obj;
+		Order order=retOrder.get();
+		List<OrderItem> orderItem=order.getOrderItemObj();
+		double totalAmount=0;
+		double price;
+		for(OrderItem o:orderItem) {
+			int quantity=Integer.parseInt(o.getQuantity());
+				
+			price=(quantity*o.getPrice());
+			totalAmount=totalAmount+price;
+		}
+		logger.info("total amount"+totalAmount);
+		Optional<ShippingAddress> retShippingAddress=shippingAddressRepository.findById(order.getShippingAddressId());
+		ShippingAddress shippingAddress=retShippingAddress.get();
+		viewOrderResponse.setOrder(order);
+		viewOrderResponse.setShippingAddress(shippingAddress);
+		viewOrderResponse.setTotalAmount(totalAmount);
+		return viewOrderResponse;
 	}
 
 	public Order saveOrder(CreateOrderRequestPO createOrderRequestPO) {
@@ -121,6 +149,7 @@ public class OrderManagerService {
 		order.setCustomerId(createOrderRequestPO.getCustomerId());
 		order.setOrderItemObj(createOrderRequestPO.getOrderItemObj());
 		Order retOrder=orderRepository.save(order);
+	
 				return retOrder;
 	}
 
@@ -261,4 +290,29 @@ public class OrderManagerService {
 				return "order deleted successfully";
 	}
 
+	public String applyCouponCode(CouponRequest couponRequest) {
+		Coupon c=couponRepository.findByCouponCode(couponRequest.getCouponCode());
+		logger.info("coupon object is"+c);
+		Date currentDate=new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); 
+		String str=formatter.format(currentDate);
+		
+		
+		int min=currentDate.compareTo(c.getStartingDate());
+		
+		int max=currentDate.compareTo(c.getEndingDate());
+		if((min==1)&&(max==-1)) {
+			logger.info("coupon valid");
+			return "coupon valid";
+			
+		}
+		else {
+			logger.info("coupon invalid");
+			return "coupon invalid";
+		}
+		
+		
+	}
+
+	
 }
