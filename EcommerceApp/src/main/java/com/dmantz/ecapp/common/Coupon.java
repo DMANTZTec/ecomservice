@@ -1,5 +1,6 @@
 package com.dmantz.ecapp.common;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -14,14 +15,14 @@ public class Coupon {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int couponId;
-	private int orderId;
+	
 	private String couponCode;
 	private Date startingDate;
 	private Date endingDate;
 	private String percentage;
 	private int marketPartnerId;
 	private String lastUpdateBy;
-	private String lastUpdateTime;
+	private Date lastUpdateTime;
 	
 	public int getCouponId() {
 		return couponId;
@@ -29,13 +30,7 @@ public class Coupon {
 	public void setCouponId(int couponId) {
 		this.couponId = couponId;
 	}
-	public int getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-	public String getCouponCode() {
+		public String getCouponCode() {
 		return couponCode;
 	}
 	public void setCouponCode(String couponCode) {
@@ -65,26 +60,26 @@ public class Coupon {
 	public void setMarketPartnerId(int marketPartnerId) {
 		this.marketPartnerId = marketPartnerId;
 	}
+	
 	public String getLastUpdateBy() {
 		return lastUpdateBy;
 	}
 	public void setLastUpdateBy(String lastUpdateBy) {
 		this.lastUpdateBy = lastUpdateBy;
 	}
-	public String getLastUpdateTime() {
+	public Date getLastUpdateTime() {
 		return lastUpdateTime;
 	}
-	public void setLastUpdateTime(String lastUpdateTime) {
+	public void setLastUpdateTime(Date lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 	@Override
 	public String toString() {
-		return "Coupon [couponId=" + couponId + ", orderId=" + orderId + ", couponCode=" + couponCode
-				+ ", startingDate=" + startingDate + ", endingDate=" + endingDate + ", percentage=" + percentage
-				+ ", marketPartnerId=" + marketPartnerId + ", lastUpdateBy=" + lastUpdateBy + ", lastUpdateTime="
-				+ lastUpdateTime + "]";
+		return "Coupon [couponId=" + couponId + ", couponCode=" + couponCode + ", startingDate=" + startingDate
+				+ ", endingDate=" + endingDate + ", percentage=" + percentage + ", marketPartnerId=" + marketPartnerId
+				+ ", lastUpdateBy=" + lastUpdateBy + ", lastUpdateTime=" + lastUpdateTime + "]";
 	}
-	
+		
 	
 	
 	

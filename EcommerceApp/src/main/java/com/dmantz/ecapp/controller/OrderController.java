@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dmantz.ecapp.common.Coupon;
-import com.dmantz.ecapp.common.Employee;
+//import com.dmantz.ecapp.common.Employee;
 import com.dmantz.ecapp.common.Order;
 import com.dmantz.ecapp.common.ShippingAddress;
-import com.dmantz.ecapp.dao.EmployeeRepository;
+//import com.dmantz.ecapp.dao.EmployeeRepository;
 import com.dmantz.ecapp.repository.CouponRepository;
 import com.dmantz.ecapp.request.CouponRequest;
 import com.dmantz.ecapp.request.CreateOrderRequestPO;
 import com.dmantz.ecapp.request.UpdateOrderRequest;
-import com.dmantz.ecapp.response.EmployeeResponse;
+//import com.dmantz.ecapp.response.EmployeeResponse;
 import com.dmantz.ecapp.response.OrderResponse;
 import com.dmantz.ecapp.response.UpdateOrderResponse;
 import com.dmantz.ecapp.response.ViewOrderResponse;
@@ -43,8 +43,8 @@ public class OrderController {
 	@Autowired
 	CouponRepository couponRepository;
 	
-	@Autowired
-	EmployeeRepository rep;
+	//@Autowired
+	//EmployeeRepository rep;
 	
 	
 	
@@ -83,7 +83,7 @@ public class OrderController {
 	}
 	
 	//Request mapping for coupons
-	@RequestMapping(value="/getCoupon",method=RequestMethod.POST)
+	@RequestMapping(value="/applyCouponCode",method=RequestMethod.POST)
 	public String applyCouponCode(@RequestBody CouponRequest couponRequest)
 	{
 		return orderManagerService.applyCouponCode(couponRequest);

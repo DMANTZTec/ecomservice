@@ -7,5 +7,5 @@ import com.dmantz.ecapp.common.Coupon;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon,Integer> {
 Coupon findByCouponCode(String couponCode);
-
+boolean	existsByCouponCode(String couponCode);
 }

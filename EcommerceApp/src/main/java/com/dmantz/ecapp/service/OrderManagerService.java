@@ -15,6 +15,7 @@ import org.springframework.util.SystemPropertyUtils;
 import com.dmantz.ecapp.common.AddItem;
 import com.dmantz.ecapp.common.Coupon;
 import com.dmantz.ecapp.common.Order;
+import com.dmantz.ecapp.common.OrderCoupon;
 import com.dmantz.ecapp.common.OrderItem;
 import com.dmantz.ecapp.common.ShippingAddress;
 import com.dmantz.ecapp.dao.OrderItemRepository;
@@ -22,6 +23,7 @@ import com.dmantz.ecapp.dao.OrderItemRepository;
 import com.dmantz.ecapp.dao.OrderRepository;
 import com.dmantz.ecapp.dao.ShippingAddressRepository;
 import com.dmantz.ecapp.repository.CouponRepository;
+import com.dmantz.ecapp.repository.OrderCouponRepository;
 import com.dmantz.ecapp.request.CouponRequest;
 import com.dmantz.ecapp.request.CreateOrderRequestPO;
 import com.dmantz.ecapp.request.UpdateOrderRequest;
@@ -39,6 +41,9 @@ public class OrderManagerService {
 	
 	@Autowired
 	CouponRepository couponRepository;
+	
+	@Autowired
+	OrderCouponRepository orderCouponRepository;
 	
 	@Autowired
 	OrderItemRepository orderItemRepository;
@@ -257,18 +262,6 @@ public class OrderManagerService {
 				logger.info("new address");
 				shippingAddressRepository.save(shippingAddress);
 			}
-			
-				//ShippingAddress sobj= shippingAddressRepository.findByCustomerId(shippingAddress.getCustomerId());
-				//logger.info("sobj is"+sobj);
-				/*if(sobj.equals(shippingAddress)) {
-					//logic for update
-					logger.info("logic for update");
-				}
-				else {
-					//logic for new order save
-					shippingAddressRepository.save(shippingAddress);
-					System.out.println("else ececuted");
-				}*/
 				
 			
 			//shippingAddressRepository.save(shippingAddress);
@@ -290,27 +283,45 @@ public class OrderManagerService {
 				return "order deleted successfully";
 	}
 
-	public String applyCouponCode(CouponRequest couponRequest) {
-		Coupon c=couponRepository.findByCouponCode(couponRequest.getCouponCode());
-		logger.info("coupon object is"+c);
-		Date currentDate=new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); 
-		String str=formatter.format(currentDate);
+	public String applyCouponCode(CouponRequest couponRequest)
+	{
 		
-		
-		int min=currentDate.compareTo(c.getStartingDate());
-		
-		int max=currentDate.compareTo(c.getEndingDate());
-		if((min==1)&&(max==-1)) {
-			logger.info("coupon valid");
-			return "coupon valid";
+		if(couponRepository.existsByCouponCode(couponRequest.getCouponCode())) 
+		{
+			System.out.println("coupon exists");
+			Coupon c=couponRepository.findByCouponCode(couponRequest.getCouponCode());
+			logger.info("coupon object is"+c);
 			
-		}
-		else {
-			logger.info("coupon invalid");
+			Date currentDate=new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); 
+			String str=formatter.format(currentDate);
+			
+			
+			int min=currentDate.compareTo(c.getStartingDate());
+			
+			int max=currentDate.compareTo(c.getEndingDate());
+			if((min==1)&&(max==-1))
+			{
+				logger.info("coupon valid");
+				OrderCoupon orderCoupon=new OrderCoupon();
+				orderCoupon.setCouponId(c.getCouponId());
+				orderCoupon.setOrderId(couponRequest.getOrderId());
+				orderCouponRepository.save(orderCoupon);
+				
+				return "coupon success";
+				
+			}
+			else {
+				logger.info("coupon expired");
+				return "coupon expired";
+			}
+			
+			
+		}else 
+		{
+			logger.info("coupon not exists");
 			return "coupon invalid";
 		}
-		
 		
 	}
 
