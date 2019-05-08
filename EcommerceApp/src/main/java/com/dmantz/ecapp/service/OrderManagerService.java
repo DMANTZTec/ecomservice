@@ -17,6 +17,7 @@ import com.dmantz.ecapp.common.Coupon;
 import com.dmantz.ecapp.common.Order;
 import com.dmantz.ecapp.common.OrderCoupon;
 import com.dmantz.ecapp.common.OrderItem;
+import com.dmantz.ecapp.common.OrderShippingAddress;
 import com.dmantz.ecapp.common.ShippingAddress;
 import com.dmantz.ecapp.dao.OrderItemRepository;
 //import com.dmantz.ecapp.common.Order;
@@ -24,6 +25,7 @@ import com.dmantz.ecapp.dao.OrderRepository;
 import com.dmantz.ecapp.dao.ShippingAddressRepository;
 import com.dmantz.ecapp.repository.CouponRepository;
 import com.dmantz.ecapp.repository.OrderCouponRepository;
+import com.dmantz.ecapp.repository.OrderShiipingAddressRepo;
 import com.dmantz.ecapp.request.CouponRequest;
 import com.dmantz.ecapp.request.CreateOrderRequestPO;
 import com.dmantz.ecapp.request.UpdateOrderRequest;
@@ -50,6 +52,9 @@ public class OrderManagerService {
 	
 	@Autowired
 	ShippingAddressRepository shippingAddressRepository;
+	
+	@Autowired
+	OrderShiipingAddressRepo orderShiipingAddressRepo;
 	
 	private static final Logger logger=LoggerFactory.getLogger(OrderManagerService.class);
 
@@ -260,13 +265,23 @@ public class OrderManagerService {
 			else {
 				//logger.info("else excuted");
 				logger.info("new address");
-				shippingAddressRepository.save(shippingAddress);
+				OrderShippingAddress orderShippingAddress=new OrderShippingAddress();
+				ShippingAddress retrivedShippingAddress=shippingAddressRepository.save(shippingAddress);
+				orderShippingAddress.setCustomerId(retrivedShippingAddress.getCustomerId());
+				orderShippingAddress.setShippingAddressId(retrivedShippingAddress.getId());
+				orderShiipingAddressRepo.save(orderShippingAddress);
+								
 			}
 				
 			
 			//shippingAddressRepository.save(shippingAddress);
 			return "shipping Address added";
 		}
+		
+		
+		public List<ShippingAddress> getShippingAddressByCustomerId(String customerId) {
+			return shippingAddressRepository.findByCustomerId(customerId);
+}
 	
 	public String deleteOrder(int order_id) {
 		
@@ -324,6 +339,8 @@ public class OrderManagerService {
 		}
 		
 	}
+
+	
 
 	
 }

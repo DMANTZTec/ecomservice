@@ -1,5 +1,6 @@
 package com.dmantz.ecapp.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -82,6 +83,12 @@ public class OrderController {
 		
 	}
 	
+	//Request mapping for get all ShippingAddresses
+	@GetMapping(value="/viewShippingAddresses")
+	public List<ShippingAddress> getShippingAddressOfCustomer(@RequestParam("customerId") String customerId) {
+		
+		return orderManagerService.getShippingAddressByCustomerId(customerId);
+	}
 	//Request mapping for coupons
 	@RequestMapping(value="/applyCouponCode",method=RequestMethod.POST)
 	public String applyCouponCode(@RequestBody CouponRequest couponRequest)
