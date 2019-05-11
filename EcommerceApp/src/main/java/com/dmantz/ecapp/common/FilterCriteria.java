@@ -3,14 +3,15 @@ package com.dmantz.ecapp.common;
 public class FilterCriteria {
 
 	String filterEnabled;
-	Integer catalog_id;
+	Integer catalogId;
 
-	public Integer getCatalog_id() {
-		return catalog_id;
+	
+	public Integer getCatalogId() {
+		return catalogId;
 	}
 
-	public void setCatalog_id(Integer catalog_id) {
-		this.catalog_id = catalog_id;
+	public void setCatalogId(Integer catalogId) {
+		this.catalogId = catalogId;
 	}
 
 	public String getFilterEnabled() {

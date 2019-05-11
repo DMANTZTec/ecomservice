@@ -21,7 +21,7 @@ import com.dmantz.ecapp.response.UserRegistrationRes;
 import com.dmantz.ecapp.service.UserManagerService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.100.27:4200")
 public class UserController {
 
 	@Autowired

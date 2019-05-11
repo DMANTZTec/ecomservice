@@ -38,6 +38,7 @@ CatalogDAO catalogDAO;
 	}
 	public List<Product> catalog(CatalogRequest catalogReq) {
 		System.out.println("entered into product() method in class CatalogService. ");
+	    System.out.println("CatalogRequest object is: "+catalogReq.getFilterCriteria().getCatalogId());
 		
 		List<ProductDetailRow> productDetailRow=catalogDAO.getProductList(catalogReq);
 		

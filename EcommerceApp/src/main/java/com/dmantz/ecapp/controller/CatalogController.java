@@ -23,20 +23,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dmantz.ecapp.common.Product;
 import com.dmantz.ecapp.dao.FilterCatalogDAO;
+
 import com.dmantz.ecapp.request.CatalogRequest;
 import com.dmantz.ecapp.response.CatalogResponse;
 import com.dmantz.ecapp.service.CatalogService;
+import com.dmantz.ecapp.service.DisplayImageService;
 import com.dmantz.ecapp.service.FilterCatalogService;
+import com.dmantz.ecapp.service.InsertImageService;
 
 
 
 @RestController
 
-@CrossOrigin(origins="http://192.168.0.100:4200")
+@CrossOrigin(origins="http://192.168.100.27:4200")
 public class CatalogController {
 	
 	@Autowired
@@ -44,6 +48,13 @@ public class CatalogController {
 	
 	@Autowired
 	FilterCatalogService filterCatalog;
+	
+	@Autowired
+	InsertImageService insertImageService;
+	
+	@Autowired
+	DisplayImageService displayImageService;
+	
 	
 	Logger logger=LoggerFactory.getLogger(CatalogController.class);
 	
@@ -102,7 +113,7 @@ public class CatalogController {
                .body(bytes);
    }
    
-   
+  
    @RequestMapping(value="ec/filterCatalog/{catalog_id}",method=RequestMethod.POST)
    public CatalogResponse filterCatalog(@PathVariable("catalog_id") int catalog_id) {
 		  logger.info("this is CatalogController class's filterCatalog(.) method. ");
@@ -113,4 +124,23 @@ public class CatalogController {
 	    catalogResponse.setProducts(products);
 		return catalogResponse;
 	   }
+   
+   
+//=========================================
+
+
+@RequestMapping(value="ec/insertImage",method=RequestMethod.POST)
+public void insertImage(@RequestParam("product_sku_image_id") String product_sku_image_id,@RequestParam("product_sku_id") String product_sku_id,@RequestParam("url") String img_url,@RequestParam("imagePath") String image) throws IOException {
+		logger.info("entered into insertImage() method.");  
+       	
+	   insertImageService.insertImage(product_sku_image_id,product_sku_id,img_url,image);
+		
+	   }
+
+//=====================================================
+@RequestMapping(value="ec/displayImage/{id}",method=RequestMethod.POST)
+public ResponseEntity<byte[]> displayImage(@PathVariable("id") String imgId) throws Exception	{
+	return displayImageService.displayImage(imgId);
 }
+}
+

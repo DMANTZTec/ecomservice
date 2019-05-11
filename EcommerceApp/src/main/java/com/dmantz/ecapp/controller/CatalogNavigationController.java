@@ -23,7 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @RestController
 @RequestMapping("/")
 @EnableSwagger2
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.100.27:4200")
 public class CatalogNavigationController {
 
 	@Autowired

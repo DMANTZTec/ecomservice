@@ -2,6 +2,7 @@ package com.dmantz.ecapp.controller;
 
 import org.aspectj.weaver.loadtime.Options;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import com.dmantz.ecapp.repository.ProductRepository;
 import com.dmantz.ecapp.request.ProductRO;
 
 @RestController
+@CrossOrigin(origins = "http://192.168.100.27:4200")
 public class ProductController {
 
 	@Autowired

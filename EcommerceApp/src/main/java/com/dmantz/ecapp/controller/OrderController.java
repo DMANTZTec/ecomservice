@@ -3,6 +3,7 @@ package com.dmantz.ecapp.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,7 +23,7 @@ import com.dmantz.ecapp.service.OrderManagerService;
 
 @RestController
 @RequestMapping(value="/EcommerceApp")
-
+@CrossOrigin(origins = "http://192.168.100.27:4200")
 public class OrderController {
 	
 	@Autowired

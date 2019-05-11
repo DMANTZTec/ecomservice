@@ -54,4 +54,5 @@ public class CatalogRequestRo {
 		this.parentCatalogId = parentCatalogId;
 	}
 
+	
 }
