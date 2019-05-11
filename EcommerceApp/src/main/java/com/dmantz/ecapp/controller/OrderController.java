@@ -33,9 +33,9 @@ import com.dmantz.ecapp.service.OrderManagerService;
 @RestController
 @RequestMapping(value="/EcommerceApp")
 
-//@CrossOrigin(origins = "http://192.168.100.27:4200")
+@CrossOrigin(origins = "http://192.168.100.27:4200")
 
-@CrossOrigin("http://localhost:4200")
+//@CrossOrigin("http://localhost:4200")
 
 public class OrderController {
 	
