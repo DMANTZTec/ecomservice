@@ -22,7 +22,7 @@ public class DisplayImageDAO {
 	
 	Class.forName("com.mysql.cj.jdbc.Driver");
 	System.out.println("loaded");
-	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/userapp", "root", "12345");
+	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/userapp", "root", "root");
 	System.out.println("connection created.");
 	String sql="select * from product_sku_image where product_sku_image_id="+imgId;
 	PreparedStatement pstmt=con.prepareStatement(sql);
