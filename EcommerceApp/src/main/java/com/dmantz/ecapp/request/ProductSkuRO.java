@@ -3,13 +3,13 @@ package com.dmantz.ecapp.request;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -31,14 +31,11 @@ public class ProductSkuRO {
 	private String imageUrl;
 
 	private double price;
-	private int productId;
-
+	
 	private String productSkuCd;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="product_sku_option", joinColumns=@JoinColumn(name="product_sku_id"),
-	inverseJoinColumns=@JoinColumn(name="option_id"))
-	
+	@JoinTable(name = "product_sku_option", joinColumns = @JoinColumn(name ="product_sku_id"), inverseJoinColumns = @JoinColumn(name = "option_id"))
 	@JoinColumn(name = "optionId", referencedColumnName = "productSkuId")
 	List<OptionsRO> options;
 
@@ -64,14 +61,6 @@ public class ProductSkuRO {
 
 	public void setPrice(double price) {
 		this.price = price;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
 	}
 
 	public List<OptionsRO> getOptions() {

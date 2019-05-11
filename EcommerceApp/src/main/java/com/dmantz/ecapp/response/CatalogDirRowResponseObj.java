@@ -3,7 +3,7 @@ package com.dmantz.ecapp.response;
 import java.util.List;
 
 public class CatalogDirRowResponseObj {
-
+ 
 	private String catalogName;
 	private int catalogId;
 	private String catalogDesc;

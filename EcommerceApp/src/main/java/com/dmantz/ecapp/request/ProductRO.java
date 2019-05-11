@@ -1,5 +1,6 @@
 package com.dmantz.ecapp.request;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +38,27 @@ public class ProductRO {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "productId", referencedColumnName = "productId")
+	@JsonIgnore
 	List<ProductSkuRO> SKU;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	//@JsonIgnore
+	List<ProductCatalogDir> productCatalogDir;
+
+	public ProductRO() {
+		super();
+	}
+
+	public ProductRO(int productId, String productName, String productDesc, String searchTag, List<ProductSkuRO> sKU,
+			List<ProductCatalogDir> productCatalogDir) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.productDesc = productDesc;
+		this.searchTag = searchTag;
+		SKU = sKU;
+		this.productCatalogDir = productCatalogDir;
+	}
 
 	public int getProductId() {
 		return productId;
@@ -74,6 +98,20 @@ public class ProductRO {
 
 	public void setSKU(List<ProductSkuRO> sKU) {
 		SKU = sKU;
+	}
+
+	public List<ProductCatalogDir> getProductCatalogDir() {
+		return productCatalogDir;
+	}
+
+	public void setProductCatalogDir(List<ProductCatalogDir> productCatalogDir) {
+		this.productCatalogDir = productCatalogDir;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductRO [productId=" + productId + ", productName=" + productName + ", productDesc=" + productDesc
+				+ ", searchTag=" + searchTag + ", SKU=" + SKU + ", productCatalogDir=" + productCatalogDir + "]";
 	}
 
 }

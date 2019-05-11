@@ -1,6 +1,6 @@
 package com.dmantz.ecapp.service;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -59,8 +59,8 @@ public class GetNavigationDataService implements NavigationserviceImpl {
 		List<CatalogDirRowResponseObj> filteredCatalogdir = catalogdirRowsDb.stream().filter(
 				res -> res.getCatalogLevel() == levelChecker && res.getParentCatalogId()== parentCatalogChecker)
 				.collect(Collectors.toList());       
-		System.out.println("stream:" + filteredCatalogdir);
-	
+		System.out.println("Stream: " + filteredCatalogdir);
+		
 		if (startLevel < endLevel) {
 
 			childStartLevel = startLevel+1;			
