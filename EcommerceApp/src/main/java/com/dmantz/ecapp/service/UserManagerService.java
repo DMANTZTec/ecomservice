@@ -29,19 +29,21 @@ public class UserManagerService {
 		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
 		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
-		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
+		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
+
 		userRepositoryObj.save(userObj);
 		userRegistrationRes.setStatus("registration Sucessful");
-        System.out.println(userRegistrationRes.toString());
+		System.out.println(userRegistrationRes.toString());
 		return userRegistrationRes;
 	}
 	//GET METHOD by EmailId
-	//	public User getUserEId(String email_id) {
-	//		Optional<User> retUser = userRepositoryObj.;
-	//		User obj = retUser.get();
-	//		return obj;
-	//	}
+
+	public User getUserEId(String emailId) {
+		User user=userRepositoryObj.findByEmailId(emailId);
+		System.out.println(user);
+		return user;
+	}
 
 	//DELETE METHOD
 	public String deleteUser(int user_id) {
@@ -55,15 +57,16 @@ public class UserManagerService {
 		User obj = retUser.get();
 		return obj;
 	}
+
 	//UPDATE FIRST NAME
 	public User updateFirstName(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
 
 		User userObj = new User();
 
 		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
-		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
 		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
+		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
 
 		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
@@ -80,9 +83,9 @@ public class UserManagerService {
 		User userObj = new User();
 
 		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
-		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
 		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
+		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
 
 		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
@@ -99,14 +102,14 @@ public class UserManagerService {
 		User userObj = new User();
 
 		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
-		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
 		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
+		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
 
 		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
 		User userUpdate = updateObj.get();
-		userUpdate.setEmail_id(createSignUpRequestPOObj.getEmail_id());
+		userUpdate.setEmailId(createSignUpRequestPOObj.getEmail_id());
 
 		return userRepositoryObj.save(userUpdate);
 
@@ -118,9 +121,9 @@ public class UserManagerService {
 		User userObj = new User();
 
 		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
-		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
 		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
+		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
 
 		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());

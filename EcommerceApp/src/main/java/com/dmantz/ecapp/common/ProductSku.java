@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class ProductSku {
 
+
 	Integer sku;
 	ArrayList<Option> options;
 	String image;
@@ -45,12 +46,8 @@ public class ProductSku {
 		this.image = image;
 	}
 
-	public String getPrice() {
-		return price;
+	public void setPrice(String string) {
+		
+		
 	}
-
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
 }

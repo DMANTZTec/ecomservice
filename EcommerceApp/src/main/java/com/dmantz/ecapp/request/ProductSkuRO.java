@@ -31,8 +31,14 @@ public class ProductSkuRO {
 	private String imageUrl;
 
 	private double price;
+
 	
+	private int productId;
+
 	private String productSkuCd;
+
+	
+	
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "product_sku_option", joinColumns = @JoinColumn(name ="product_sku_id"), inverseJoinColumns = @JoinColumn(name = "option_id"))

@@ -9,7 +9,12 @@ import com.dmantz.ecapp.common.Product;
 public class CatalogRequest {
 
 	FilterCriteria filterCriteria;
+    
+	
+	
+	
 
+	
 	public FilterCriteria getFilterCriteria() {
 		return filterCriteria;
 	}
