@@ -45,8 +45,8 @@ public class UserManagerService {
 		System.out.println(userRegistrationRes.toString());
 		return userRegistrationRes;
 	}
+	
 	//GET METHOD by EmailId
-
 	public User getUserEId(String emailId) {
 		User user=userRepositoryObj.findByEmailId(emailId);
 		System.out.println(user);

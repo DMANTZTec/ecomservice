@@ -37,17 +37,20 @@ public class UserController {
 		return userManagerServiceObj.register(createSignUpRequestPOObj);
 
 	}
+	
 	//GET ALL USERS
 	@GetMapping(value="/allUsers")
 	public List<User> getAllUser(){
 		return userManagerServiceObj.getAllUser();
 	}
+	
 	//GET USER
 	@GetMapping(value="/getUser")
 	public User getUser(@RequestParam("user_id") int user_id) {
 		logger.info("Selected User Details Are Displayed");
 		return userManagerServiceObj.getUser(user_id);
 	}
+	
 	//GET USER USING EMAILID
 	@GetMapping(value="/getUser/emailId")
 	public User getUserEId(@RequestParam("email_id") String email_id) {
@@ -99,10 +102,8 @@ public class UserController {
 
 	// USER LOGIN
 	@PostMapping(value="/userLogin")
-	public User userLogin(@RequestBody LoginRequest loginRequest)
-	{
+	public User userLogin(@RequestBody LoginRequest loginRequest)	{
 		logger.info("object is"+loginRequest);
 		return userManagerServiceObj.userLogin(loginRequest);
-
 	}
 }

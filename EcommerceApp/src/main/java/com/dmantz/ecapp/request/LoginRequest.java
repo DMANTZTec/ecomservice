@@ -3,7 +3,7 @@ package com.dmantz.ecapp.request;
 public class LoginRequest {
 	private String emailId;
 	private String password;
-	
+
 	public String getEmailId() {
 		return emailId;
 	}
@@ -16,11 +16,9 @@ public class LoginRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "LoginRequest [emailId=" + emailId + ", password=" + password + "]";
 	}
-	
- 
 }
