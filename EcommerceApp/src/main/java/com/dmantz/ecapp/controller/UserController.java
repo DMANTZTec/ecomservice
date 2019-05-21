@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ import com.dmantz.ecapp.response.UserRegistrationRes;
 import com.dmantz.ecapp.service.UserManagerService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.0.100:4200")
 public class UserController {
 
 	@Autowired
@@ -106,4 +107,10 @@ public class UserController {
 		logger.info("object is"+loginRequest);
 		return userManagerServiceObj.userLogin(loginRequest);
 	}
-}
+	
+	//request mapping for reset password
+		@PostMapping(value="/checkUserEmail")
+		public String checkUserEmail(@RequestBody CreateSignUpRequestPO createSignUpRequestPO) {
+			
+			return userManagerServiceObj.checkExistence(createSignUpRequestPO.getEmail_id());
+		}}

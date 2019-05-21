@@ -197,4 +197,25 @@ public class UserManagerService {
 			return null;
 		}
 	}
+
+	public String checkExistence(String email_id) {
+		
+		try 
+		{
+			if(userRepositoryObj.existsByEmailId(email_id)) 
+			{
+				return "registerd Email" ;
+			
+			}else
+			{
+				return "email not correct please enter your registerd email";
+			}
+			
+			
+		}catch(Exception e) {
+			logger.error("error desc"+e);
+			return "exception occurs";
+		}
+		
+	}
 }
