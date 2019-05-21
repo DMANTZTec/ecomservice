@@ -10,12 +10,13 @@ import javax.persistence.Table;
 
 public class CreateSignUpRequestPO {
 
-	
+
 	private int user_id;
 	private String firstName;
 	private String lastName;
 	private String email_id;
 	private String password;
+	private String mobileNumber;
 
 	public int getUser_id() {
 		return user_id;
@@ -56,11 +57,17 @@ public class CreateSignUpRequestPO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
 
 	@Override
 	public String toString() {
 		return "CreateSignUpRequestPO [user_id=" + user_id + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email_id=" + email_id + ", password=" + password + "]";
+				+ ", email_id=" + email_id + ", password=" + password + ", mobileNumber=" + mobileNumber + "]";
 	}
-
 }

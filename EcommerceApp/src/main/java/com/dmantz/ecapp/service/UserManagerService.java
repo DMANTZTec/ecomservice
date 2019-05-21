@@ -1,8 +1,11 @@
 
 package com.dmantz.ecapp.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.json.simple.JSONArray;
 //import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.dmantz.ecapp.common.User;
+import com.dmantz.ecapp.controller.UserController;
 import com.dmantz.ecapp.repository.UserRepository;
 import com.dmantz.ecapp.request.CreateSignUpRequestPO;
+import com.dmantz.ecapp.request.LoginRequest;
 import com.dmantz.ecapp.response.UserRegistrationRes;
 
 @Service
@@ -19,6 +24,8 @@ public class UserManagerService {
 
 	@Autowired
 	UserRepository userRepositoryObj;
+
+	private static final Logger logger=LoggerFactory.getLogger(UserController.class);
 
 	//SAVE METHOD 
 	public UserRegistrationRes register(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
@@ -31,6 +38,7 @@ public class UserManagerService {
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
 		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
+		userObj.setMobileNumber(createSignUpRequestPOObj.getMobileNumber());
 
 		userRepositoryObj.save(userObj);
 		userRegistrationRes.setStatus("registration Sucessful");
@@ -51,6 +59,11 @@ public class UserManagerService {
 		return "order deleted successfully";
 	}
 
+	//GET ALL METHOD
+	public List<User> getAllUser() {
+		return userRepositoryObj.findAll();
+	}
+
 	//GET METHOD
 	public User getUser(int user_id) {
 		Optional<User> retUser = userRepositoryObj.findById(user_id);
@@ -68,6 +81,7 @@ public class UserManagerService {
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
 		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
+		userObj.setMobileNumber(createSignUpRequestPOObj.getMobileNumber());
 
 		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
 		User userUpdate = updateObj.get();
@@ -87,6 +101,7 @@ public class UserManagerService {
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
 		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
+		userObj.setMobileNumber(createSignUpRequestPOObj.getMobileNumber());
 
 		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
 		User userUpdate = updateObj.get();
@@ -106,6 +121,7 @@ public class UserManagerService {
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
 		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
+		userObj.setMobileNumber(createSignUpRequestPOObj.getMobileNumber());
 
 		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
 		User userUpdate = updateObj.get();
@@ -125,6 +141,7 @@ public class UserManagerService {
 		userObj.setLastName(createSignUpRequestPOObj.getLastName());
 		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
 		userObj.setPassword(createSignUpRequestPOObj.getPassword());
+		userObj.setMobileNumber(createSignUpRequestPOObj.getMobileNumber());
 
 		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
 		User userUpdate = updateObj.get();
@@ -133,25 +150,51 @@ public class UserManagerService {
 		return userRepositoryObj.save(userUpdate);
 
 	}
+	//UPDATE MOBILE NUMBER
+	public User updateMobileNumber(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
 
-	//	public User update(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
-	//
-	//		User userObj = new User();
-	//
-	//		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
-	//		userObj.setEmail_id(createSignUpRequestPOObj.getEmail_id());
-	//		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
-	//		userObj.setLastName(createSignUpRequestPOObj.getLastName());
-	//		userObj.setPassword(createSignUpRequestPOObj.getPassword()); 
-	//
-	//		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
-	//		User userUpdate = updateObj.get();
-	//		
-	//		return "Updated"; 
-	//	public void update(@PathVariable Integer user_id, CreateSignUpRequestPO createSignUpRequestPOObj) {
-	//		
-	//		userRepositoryObj.save(createSignUpRequestPOObj);
-	//		
-	//	
-	//	}
+		User userObj = new User();
+
+		userObj.setUser_id(createSignUpRequestPOObj.getUser_id());
+		userObj.setFirstName(createSignUpRequestPOObj.getFirstName());
+		userObj.setLastName(createSignUpRequestPOObj.getLastName());
+		userObj.setEmailId(createSignUpRequestPOObj.getEmail_id());
+		userObj.setPassword(createSignUpRequestPOObj.getPassword());
+		userObj.setMobileNumber(createSignUpRequestPOObj.getMobileNumber());
+
+		Optional<User> updateObj = userRepositoryObj.findById(userObj.getUser_id());
+		User userUpdate = updateObj.get();
+		userUpdate.setFirstName(createSignUpRequestPOObj.getFirstName());
+
+		return userRepositoryObj.save(userUpdate);
+
+	}
+
+	//USER LOGIN
+	public User userLogin(LoginRequest loginRequest) 
+	{
+		User userObj=new User();
+		try {
+
+			User user = userRepositoryObj.findByEmailIdAndPassword(loginRequest.getEmailId(), loginRequest.getPassword());
+			if(user!=null) 
+			{
+				logger.info("user exists in db");
+				user.setLoginStatus("login success");
+				return user;
+
+			}
+			else 
+			{
+				logger.info("user not found with that credentials");
+				userObj.setLoginStatus("not a valid user please enter valid credentials or else do register");
+				return userObj;
+			}
+		}
+		catch(Exception e) 
+		{
+			logger.error("error"+e);
+			return null;
+		}
+	}
 }

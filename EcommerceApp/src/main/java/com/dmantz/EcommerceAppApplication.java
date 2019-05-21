@@ -1,3 +1,4 @@
+
 package com.dmantz;
 
 import org.springframework.boot.SpringApplication;
@@ -17,4 +18,16 @@ public class EcommerceAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EcommerceAppApplication.class, args);
 	}
+	@SuppressWarnings("deprecation")
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurerAdapter() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				//System.out.println
+				registry.addMapping("/**").allowedOrigins("https://localhost:4200");
+
+			}
+		};
+
 	}
+}

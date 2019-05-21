@@ -5,10 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "registration")
+@Table(name = "registration",uniqueConstraints={@UniqueConstraint(columnNames = {" emailId" , "password","mobileNumber"})})
 public class User {
 
 	@Id
@@ -22,6 +23,11 @@ public class User {
 	private String emailId;
 	@NotNull
 	private String password;
+	@NotNull
+	private String mobileNumber;
+	
+	private String loginStatus;
+	
 	public int getUser_id() {
 		return user_id;
 	}
@@ -52,11 +58,22 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+	
+	public String getLoginStatus() {
+		return loginStatus;
+	}
+	public void setLoginStatus(String loginStatus) {
+		this.loginStatus = loginStatus;
+	}
 	@Override
 	public String toString() {
 		return "User [user_id=" + user_id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId="
-				+ emailId + ", password=" + password + "]";
-	}
-
-	
+				+ emailId + ", password=" + password + ", mobileNumber=" + mobileNumber + "]";
+	}	
 }

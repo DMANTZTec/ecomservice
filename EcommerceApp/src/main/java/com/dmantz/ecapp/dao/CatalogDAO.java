@@ -45,7 +45,7 @@ public class CatalogDAO {
 	String query="SELECT p.product_id,p.product_name,psku.url,psku.price_amt,psku.product_sku_id,psku.product_sku_cd, \r\n" +
 			"o.option_name,o.option_value \r\n" +
 			 "FROM product p INNER JOIN product_sku psku on p.product_id=psku.product_id \r\n" +
-			 "INNER JOIN product_sku_option pskuo on pskuo.product_sku_id=psku.product_sku_id \r\n" + 
+			 "INNER JOIN product_sku_option pskuo on pskuo.products_sku_id=psku.product_sku_id \r\n" + 
 			 "INNER JOIN options o ON o.option_id=pskuo.option_id" ; 
 	 
      FilterCriteria fc=catalogReq.getFilterCriteria();

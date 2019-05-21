@@ -1,13 +1,14 @@
 package com.dmantz.ecapp.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dmantz.ecapp.common.User;
-import com.dmantz.ecapp.repository.UserRepository;
 import com.dmantz.ecapp.request.CreateSignUpRequestPO;
+import com.dmantz.ecapp.request.LoginRequest;
 import com.dmantz.ecapp.response.UserRegistrationRes;
 import com.dmantz.ecapp.service.UserManagerService;
 
 @RestController
-@CrossOrigin(origins = "http://192.168.100.27:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
 	@Autowired
@@ -35,6 +36,11 @@ public class UserController {
 		logger.info("results:" + createSignUpRequestPOObj.toString());
 		return userManagerServiceObj.register(createSignUpRequestPOObj);
 
+	}
+	//GET ALL USERS
+	@GetMapping(value="/allUsers")
+	public List<User> getAllUser(){
+		return userManagerServiceObj.getAllUser();
 	}
 	//GET USER
 	@GetMapping(value="/getUser")
@@ -84,15 +90,19 @@ public class UserController {
 		return userManagerServiceObj.updatePassword(createSignUpRequestPOObj);
 	}
 
-	//TOTAL UPDATE
-	//	@RequestMapping(value="/update/{id}")
-	//	public User update(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj, @PathVariable(value="id") Integer user_id)  {
-	//		userRepository.save(createSignUpRequestPOObj);
+	//UPDATE MOBILE NUMBER
+	@RequestMapping(value = "/updateMobileNumber", method = RequestMethod.PUT)
+	public User updateMobileNumber(@RequestBody CreateSignUpRequestPO createSignUpRequestPOObj) {
+		logger.info("MobileNumber is updated");
+		return userManagerServiceObj.updateMobileNumber(createSignUpRequestPOObj);
+	}
 
+	// USER LOGIN
+	@PostMapping(value="/userLogin")
+	public User userLogin(@RequestBody LoginRequest loginRequest)
+	{
+		logger.info("object is"+loginRequest);
+		return userManagerServiceObj.userLogin(loginRequest);
 
-	//}
-	//	@RequestMapping(value="/findAll")
-	//	public List<CreateSignUpRequestPO>findAll() {
-	//		return userRepositoryObj.findAll();
-	//	}
+	}
 }
