@@ -218,4 +218,40 @@ public class UserManagerService {
 		}
 		
 	}
+
+	public UserRegistrationRes resetPassword(CreateSignUpRequestPO createSignUpRequestPO)
+	{
+		User user=new User();
+		UserRegistrationRes userRegistrationRes=new UserRegistrationRes();
+		logger.info("ip request object"+createSignUpRequestPO);
+		try {
+			if(userRepositoryObj.existsByEmailId(createSignUpRequestPO.getEmail_id()))
+			{
+			user=userRepositoryObj.findByEmailId(createSignUpRequestPO.getEmail_id());
+			user.setPassword(createSignUpRequestPO.getPassword());
+			User ret=userRepositoryObj.save(user);
+			if(ret!=null) 
+			{
+				logger.info("updated");
+				userRegistrationRes.setStatus("reset password successfully");
+			}
+			else 
+			{
+				userRegistrationRes.setStatus("user not found in db with that credentials");
+			}
+			return userRegistrationRes;
+			}else {
+				userRegistrationRes.setStatus("not registerd email plz login");
+				return userRegistrationRes;
+			}
+ 
+		}
+		catch(Exception e) {
+			
+			userRegistrationRes.setStatus("exception ocuured");
+			logger.error("error "+e);
+			return userRegistrationRes;
+		}
+		
+	}
 }

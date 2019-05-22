@@ -108,9 +108,21 @@ public class UserController {
 		return userManagerServiceObj.userLogin(loginRequest);
 	}
 	
-	//request mapping for reset password
+	//request mapping for checking email 
 		@PostMapping(value="/checkUserEmail")
 		public String checkUserEmail(@RequestBody CreateSignUpRequestPO createSignUpRequestPO) {
 			
 			return userManagerServiceObj.checkExistence(createSignUpRequestPO.getEmail_id());
-		}}
+		}
+		
+		//request mapping for reset password
+		@PostMapping(value="/resetPassword")
+		public UserRegistrationRes resetUserPassword(@RequestBody CreateSignUpRequestPO createSignUpRequestPO) {
+			logger.info("ip request object"+createSignUpRequestPO);
+			return userManagerServiceObj.resetPassword(createSignUpRequestPO);
+			
+			
+		}
+		
+		
+		}
